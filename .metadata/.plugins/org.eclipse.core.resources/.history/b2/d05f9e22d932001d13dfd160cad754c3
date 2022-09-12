@@ -116,7 +116,7 @@ int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
 		case 4:
 			if (delanteros < MAXIMO_DELANTEROS) {
 				ret = 1;
-				delanteros++;
+				arqueros++;
 				printf("%s", mensajeExito);
 			} else {
 				printf("%s", mensajeError);

@@ -96,6 +96,7 @@ int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
 			}
 			break;
 		case 2:
+			printf("entre en el 2!!");
 			if (defensores < MAXIMO_DEFENSORES) {
 				ret = 1;
 				defensores++;
@@ -116,7 +117,7 @@ int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
 		case 4:
 			if (delanteros < MAXIMO_DELANTEROS) {
 				ret = 1;
-				delanteros++;
+				arqueros++;
 				printf("%s", mensajeExito);
 			} else {
 				printf("%s", mensajeError);
