@@ -15,6 +15,10 @@ int main(void) {
 	int esOpcionValida;
 	int opcion;
 
+	//int numeroCamiseta;
+	//char posición[64];
+	//char confederación[64];
+
 	while (mostrarMenu) {
 		esOpcionValida =
 				getNumero(&opcion,
@@ -26,7 +30,7 @@ int main(void) {
 				ingresarCostos();
 				break;
 			case 2:
-				printf("2");
+				cargaDeJugadores();
 				break;
 			case 3:
 				printf("3");

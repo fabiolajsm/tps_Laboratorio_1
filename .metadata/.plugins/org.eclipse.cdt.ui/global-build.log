@@ -1,4 +1,4 @@
-08:50:17 **** Incremental Build of configuration Debug for project TP1 ****
+15:25:40 **** Incremental Build of configuration Debug for project TP1 ****
 make all 
 Building file: ../src/operaciones.c
 Invoking: GCC C Compiler
@@ -10,9 +10,6 @@ Invoking: GCC C Linker
 gcc  -o "TP1"  ./src/TP1.o ./src/operaciones.o ./src/validaciones.o   
 Finished building target: TP1
  
-08:50:21 **** Incremental Build of configuration Debug for project TP1 ****
-make all 
-make: No se hace nada para 'all'.
-09:05:26 **** Incremental Build of configuration Debug for project TP1 ****
+15:26:04 **** Incremental Build of configuration Debug for project TP1 ****
 make all 
 make: No se hace nada para 'all'.

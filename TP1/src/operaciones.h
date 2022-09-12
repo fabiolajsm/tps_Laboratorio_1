@@ -9,5 +9,6 @@
 #define OPERACIONES_H_
 
 int ingresarCostos();
+int cargaDeJugadores();
 
 #endif /* OPERACIONES_H_ */

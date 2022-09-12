@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define MAXIMO_DE_JUGADORES 22
+
+int numerosCargados[MAXIMO_DE_JUGADORES] = { };
 
 static int esNumerica(char cadena[]) {
 	int i = 0;
@@ -38,9 +41,10 @@ static int getInt(int *pResultado) {
 }
 
 int getNumero(int *pResultado, char *mensaje, char *mensajeError, int minimo,
-		int maximo, int intentos) {
+		int maximo, int intentos, int validarDisponible) {
 	int ret = -1;
 	int num;
+
 	if (pResultado != NULL && mensaje != NULL && mensajeError != NULL) {
 		while (intentos > 0) {
 			printf("%s", mensaje);
@@ -53,6 +57,24 @@ int getNumero(int *pResultado, char *mensaje, char *mensajeError, int minimo,
 			}
 			intentos--;
 			printf("%s", mensajeError);
+		}
+	}
+	return ret;
+}
+
+int camisetaDisponible(int num, char *mensajeExito, char *mensajeError) {
+	int ret = 0;
+	if (mensajeExito != NULL && mensajeError != NULL && num > 0) {
+		for (int i = 0; i < MAXIMO_DE_JUGADORES; i++) {
+			if (numerosCargados[num - 1] != num) {
+				ret = 1;
+				numerosCargados[num - 1] = num;
+				printf("%s", mensajeExito);
+				break;
+			} else {
+				printf("%s", mensajeError);
+				break;
+			}
 		}
 	}
 	return ret;
