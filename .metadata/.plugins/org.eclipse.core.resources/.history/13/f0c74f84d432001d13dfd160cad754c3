@@ -9,9 +9,9 @@
 #include <string.h>
 #define MAXIMO_DE_JUGADORES 22
 #define MAXIMO_ARQUEROS 2
-#define MAXIMO_DEFENSORES 8
-#define MAXIMO_MEDIOCAMPISTAS 8
-#define MAXIMO_DELANTEROS 4
+#define MAXIMO_DEFENSORES 2
+#define MAXIMO_MEDIOCAMPISTAS 2
+#define MAXIMO_DELANTEROS 2
 
 int numerosCargados[MAXIMO_DE_JUGADORES] = { };
 int arqueros = 0;
