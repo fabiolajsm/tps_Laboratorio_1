@@ -29,7 +29,7 @@ static int getInt(int *pResultado) {
 
 	fgets(buffer, sizeof(buffer), stdin);
 	buffer[strlen(buffer) - 1] = '\0';
-
+	printf("buffer %d", esNumerica(buffer));
 	if (esNumerica(buffer) == 1) {
 		*pResultado = atoi(buffer);
 		ret = 1;
@@ -44,7 +44,7 @@ int getNumero(int *pResultado, char *mensaje, char *mensajeError, int minimo,
 	if (pResultado != NULL && mensaje != NULL && mensajeError != NULL) {
 		while (intentos > 0) {
 			printf("%s", mensaje);
-			if (getInt(&num) == 1) {
+			if (getInt(&num)) {
 				if (num <= maximo && num >= minimo) {
 					*pResultado = num;
 					ret = 0;

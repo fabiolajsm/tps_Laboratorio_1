@@ -29,7 +29,7 @@ static int getInt(int *pResultado) {
 
 	fgets(buffer, sizeof(buffer), stdin);
 	buffer[strlen(buffer) - 1] = '\0';
-
+	printf("buffer %d", esNumerica(buffer));
 	if (esNumerica(buffer) == 1) {
 		*pResultado = atoi(buffer);
 		ret = 1;

@@ -49,7 +49,7 @@ int ingresarCostos() {
 		}
 	}
 	printf(
-			"Gastos hasta el momento:\n→ Costos de hospedaje: %d.\n→ Costos de comida: %d.\n→ Costos de transporte: %d.\n",
+			"Gastos hasta el momento:\nCostos de hospedaje: %d.\nCostos de comida: %d.\nCostos de transporte: %d.\n",
 			hospedaje, comida, transporte);
 	return 0;
 }
