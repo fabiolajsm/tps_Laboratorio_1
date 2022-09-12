@@ -72,29 +72,29 @@ int cargaDeJugadores() {
 	int posicion = 0;
 	int confederacion;
 
-	while (!esCamisetaValida) {
-		getNumero(&numeroCamiseta, "Ingrese número de camiseta:\n",
-				"Error. Tiene que ser un número, del 1 al 22.\n", 1, 22, 22);
-		esCamisetaValida =
-				camisetaDisponible(numeroCamiseta,
-						"Número de camiseta seleccionada exitosamente.\n",
-						"Error. Número de camiseta no disponible, pruebe con otro número.\n");
+	if (!esCamisetaValida) {
+		getNumero(&numeroCamiseta,
+				"Ingrese número de camiseta, solo hay del número 1 hasta el 22:\n",
+				"Error. Tiene que ser un número, desde el 1 hasta el 22.\n", 1,
+				22, 22);
+		esCamisetaValida = camisetaDisponible(numeroCamiseta,
+				"Número de camiseta seleccionada exitosamente.\n",
+				"Error. Número de camiseta no disponible.\n");
 	}
-	while (!esPosicionValida) {
+	if (!esPosicionValida) {
 		getNumero(&posicion,
-				"Ingrese que posición quiere jugar:\n1. Arquero.\n2. Defensa.\n3. Mediocampo.\n4. Delantero.\n",
-				"Error. Tienes que seleccionar el número de la posición que quieres jugar (opciones del 1 al 4).\n",
+				"Elija que posición quiere jugar:\n1) Arquero.\n2) Defensa.\n3) Mediocampo.\n4) Delantero.\n",
+				"Error. Tienes que seleccionar la posición con un número del 1 al 4.\n",
 				1, 4, 3);
-		esPosicionValida =
-				posicionDisponible(posicion,
-						"Posición seleccionada exitosamente.\n",
-						"Error. La posición que elegiste no tiene cupos, vuelve a intentarlo seleccionando otra.\n");
+		esPosicionValida = posicionDisponible(posicion,
+				"Posición seleccionada exitosamente.\n",
+				"Error. La posición que elegiste no tiene cupos, vuelve a intentarlo seleccionando otra.\n");
 	}
-	getNumero(&confederacion,
-			"Selecciona el número de la confederación donde quieres jugar:\n1. AFC en Asia.\n2. CAF en África.\n3. CONCACAF en zona del Norte.\n4. CONMEBOL en Sudamérica.\n5. UEFA en Europa.\n6. OFC en Oceanía.\n",
-			"Error. Tienes que seleccionar la confederación con un número disponible en las opciones(opciones del 1 al 6).\n",
+	getNumero(&posicion,
+			"Selecciona el número de la confederación donde quieres jugar:\n1) AFC en Asia.\n2) CAF en África.\n3) CONCACAF en zona del Norte.\n4) CONMEBOL en Sudamérica.\n5) UEFA en Europa.\n6) OFC en Oceanía.\n",
+			"Error. Tienes que seleccionar la confederación con un número disponible en las opciones.\n",
 			1, 6, 3);
-	mostrarCantidadJugadores();
+
 	return 0;
 }
 

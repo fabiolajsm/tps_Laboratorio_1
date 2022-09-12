@@ -135,6 +135,6 @@ int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
 
 void mostrarCantidadJugadores() {
 	printf(
-			"→ Arqueros: %d\n→ Defensores: %d\n→ Mediocampistas: %d\n→ Delanteros: %d\n",
+			"→ Arqueros: %d\→ Defensores: %d\n→ Mediocampistas: %d\n→ Delanteros: %d",
 			arqueros, defensores, mediocampistas, delanteros);
 }
