@@ -8,7 +8,7 @@
 #ifndef OPERACIONES_H_
 #define OPERACIONES_H_
 
-void ingresarCostos();
-void cargaDeJugadores();
+int ingresarCostos();
+int cargaDeJugadores();
 
 #endif /* OPERACIONES_H_ */

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "validaciones.h"
-#define GASTO_MAXIMO 1000000000
 
 int hospedaje = 0;
 int comida = 0;
@@ -23,19 +22,19 @@ void ingresarCostos() {
 		case 1:
 			getNumero(&gastoH, "Ingrese gasto del hospedaje:\n",
 					"Error. Tiene que ser un gasto mayor a 0, numérico y sin decimales.\n",
-					1, GASTO_MAXIMO, 3);
+					1, 1000000000, 3);
 			hospedaje += gastoH;
 			break;
 		case 2:
 			getNumero(&gastoC, "Ingrese gasto de la comida:\n",
 					"Error. Tiene que ser un gasto mayor a 0, numérico y sin decimales.\n",
-					1, GASTO_MAXIMO, 3);
+					1, 1000000000, 3);
 			comida += gastoC;
 			break;
 		case 3:
 			getNumero(&gastoT, "Ingrese gasto del transporte:\n",
 					"Error. Tiene que ser un gasto mayor a 0, numérico y sin decimales.\n",
-					1, GASTO_MAXIMO, 3);
+					1, 1000000000, 3);
 			transporte += gastoT;
 			break;
 		}
@@ -44,6 +43,11 @@ void ingresarCostos() {
 			"Gastos hasta el momento:\n→ Costos de hospedaje: $%d.\n→ Costos de comida: $%d.\n→ Costos de transporte: $%d.\n",
 			hospedaje, comida, transporte);
 }
+void mostrarCantidadJugadores() {
+	printf(
+			"→ Arqueros: %d\n→ Defensores: %d\n→ Mediocampistas: %d\n→ Delanteros: %d\n",
+			arqueros, defensores, mediocampistas, delanteros);
+}
 
 void cargaDeJugadores() {
 	int esCamisetaValida = 0;
@@ -51,6 +55,10 @@ void cargaDeJugadores() {
 	int numeroCamiseta = 0;
 	int posicion = 0;
 	int confederacion;
+	int arqueros = 0;
+	int defensores = 0;
+	int mediocampistas = 0;
+	int delanteros = 0;
 
 	while (!esCamisetaValida) {
 		getNumero(&numeroCamiseta, "Ingrese número de camiseta:\n",
@@ -74,7 +82,9 @@ void cargaDeJugadores() {
 			"Selecciona el número de la confederación donde quieres jugar:\n1. AFC en Asia.\n2. CAF en África.\n3. CONCACAF en zona del Norte.\n4. CONMEBOL en Sudamérica.\n5. UEFA en Europa.\n6. OFC en Oceanía.\n",
 			"Error. Tienes que seleccionar la confederación con un número disponible en las opciones(opciones del 1 al 6).\n",
 			1, 6, 3);
-
-	mostrarCantidadJugadores();
+	if (posicionesJugadores(&arqueros, &defensores, &mediocampistas,
+			&delanteros)) {
+		mostrarCantidadJugadores();
+	}
 }
 

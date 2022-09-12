@@ -51,6 +51,10 @@ void cargaDeJugadores() {
 	int numeroCamiseta = 0;
 	int posicion = 0;
 	int confederacion;
+	int arqueros = 0;
+	int defensores = 0;
+	int mediocampistas = 0;
+	int delanteros = 0;
 
 	while (!esCamisetaValida) {
 		getNumero(&numeroCamiseta, "Ingrese número de camiseta:\n",

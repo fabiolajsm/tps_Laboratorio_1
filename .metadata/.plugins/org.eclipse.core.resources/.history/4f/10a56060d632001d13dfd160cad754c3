@@ -127,8 +127,12 @@ int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
 	return ret;
 }
 
-void mostrarCantidadJugadores() {
-	printf(
-			"→ Arqueros: %d\n→ Defensores: %d\n→ Mediocampistas: %d\n→ Delanteros: %d\n",
-			arqueros, defensores, mediocampistas, delanteros);
+void posicionesJugadores(int *arqueros, int *defensores, int *mediocampistas,
+		int *delanteros) {
+	if (arqueros != NULL && defensores != NULL && mediocampistas != NULL
+			&& delanteros != NULL) {
+		printf(
+				"→ Arqueros: %d\n→ Defensores: %d\n→ Mediocampistas: %d\n→ Delanteros: %d\n",
+				arqueros, defensores, mediocampistas, delanteros);
+	}
 }
