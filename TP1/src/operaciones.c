@@ -2,10 +2,19 @@
 #include <stdlib.h>
 #include "validaciones.h"
 #define GASTO_MAXIMO 1000000000
+#define CIEN 100
 
 int hospedaje = 0;
 int comida = 0;
 int transporte = 0;
+// Confederaciones:
+float AFC = 0;
+float CAF = 0;
+float CONCACAF = 0;
+float CONMEBOL = 0;
+float UEFA = 0;
+float OFC = 0;
+float totalJugadores = 0;
 
 void ingresarCostos() {
 	int opcion;
@@ -45,6 +54,31 @@ void ingresarCostos() {
 			hospedaje, comida, transporte);
 }
 
+static void agregarConfederacion(int opcion) {
+	if (opcion > 0) {
+		switch (opcion) {
+		case 1:
+			AFC++;
+			break;
+		case 2:
+			CAF++;
+			break;
+		case 3:
+			CONCACAF++;
+			break;
+		case 4:
+			CONMEBOL++;
+			break;
+		case 5:
+			UEFA++;
+			break;
+		case 6:
+			OFC++;
+			break;
+		}
+	}
+}
+
 void cargaDeJugadores() {
 	int esCamisetaValida = 0;
 	int esPosicionValida = 0;
@@ -75,6 +109,31 @@ void cargaDeJugadores() {
 			"Error. Tienes que seleccionar la confederación con un número disponible en las opciones(opciones del 1 al 6).\n",
 			1, 6, 3);
 
+	agregarConfederacion(confederacion);
+	totalJugadores++;
 	mostrarCantidadJugadores();
+}
+/*en esta sección solo se calcularan los valores de los datos solicitados, NO se deberán
+ imprimir, solo informar que se realizaron correctamente los siguientes caculos:
+ a. Calcular el promedio de jugadores de cada mercado.
+ b. Calcular el costo de mantenimiento.
+ c. Si la mayoría del plantel está compuesta por jugadores de la confederación europea el costo
+ de mantenimiento recibe un aumento del 35%.*/
+
+void calcular(float *pAFC, float *pCAF, float *pCONCACAF, float *pCONMEBOL,
+		float *pUEFA, float *pOFC) {
+	int totalCostos = hospedaje + comida + transporte;
+
+	if (pAFC != NULL && pCAF != NULL && pCONCACAF != NULL && pCONMEBOL != NULL
+			&& pUEFA != NULL && pOFC != NULL
+			&& esOpcionDisponible(totalCostos, totalJugadores) == 0) {
+		*pAFC = divisionDecimales(AFC, totalJugadores) * CIEN;
+		*pCAF = divisionDecimales(CAF, totalJugadores) * CIEN;
+		*pCONCACAF = divisionDecimales(CONCACAF, totalJugadores) * CIEN;
+		*pCONMEBOL = divisionDecimales(CONMEBOL, totalJugadores) * CIEN;
+		*pUEFA = divisionDecimales(UEFA, totalJugadores) * CIEN;
+		*pOFC = divisionDecimales(OFC, totalJugadores) * CIEN;
+		printf("Se realizaron exitosamente los cálculos.\n");
+	}
 }
 

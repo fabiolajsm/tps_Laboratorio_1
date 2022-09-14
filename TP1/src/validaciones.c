@@ -127,6 +127,30 @@ int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
 	return ret;
 }
 
+float divisionDecimales(float numA, float numB) {
+	if (numB == 0) {
+		return -1;
+	}
+	return numA / numB;
+}
+
+int esOpcionDisponible(int mantenimiento, int jugadores) {
+	int ret = -1;
+	if (mantenimiento < 1 && jugadores < 1) {
+		printf(
+				"Error. No hay costos de mantenimiento ni jugadores ingresados. Intente yendo a la opción 1 y a la 2.\n");
+	} else if (mantenimiento < 1) {
+		printf(
+				"Error. No hay costos de mantenimiento ingresados. Intente yendo a la opción 1.\n");
+	} else if (jugadores < 1) {
+		printf(
+				"Error. No hay jugadores ingresados. Intente yendo a la opción 2.\n");
+	} else {
+		ret = 0;
+	}
+	return ret;
+}
+
 void mostrarCantidadJugadores() {
 	printf(
 			"→ Arqueros: %d\n→ Defensores: %d\n→ Mediocampistas: %d\n→ Delanteros: %d\n",

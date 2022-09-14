@@ -1,6 +1,15 @@
-17:28:57 **** Incremental Build of configuration Debug for project TP1 ****
+22:34:22 **** Incremental Build of configuration Debug for project TP1 ****
 make all 
-make: No se hace nada para 'all'.
+Building file: ../src/TP1.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/TP1.d" -MT"src/TP1.o" -o "src/TP1.o" "../src/TP1.c"
+Finished building: ../src/TP1.c
+ 
+Building target: TP1
+Invoking: GCC C Linker
+gcc  -o "TP1"  ./src/TP1.o ./src/operaciones.o ./src/validaciones.o   
+Finished building target: TP1
+ 
 
-17:28:57 Build Finished. 0 errors, 0 warnings. (took 162ms)
+22:34:23 Build Finished. 0 errors, 0 warnings. (took 263ms)
 

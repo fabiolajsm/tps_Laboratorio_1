@@ -14,6 +14,13 @@ int main(void) {
 	int mostrarMenu = 1;
 	int esOpcionValida;
 	int opcion;
+	// para mostrar despues:
+	float pAFC;
+	float pCAF;
+	float pCONCACAF;
+	float pCONMEBOL;
+	float pUEFA;
+	float pOFC;
 
 	while (mostrarMenu) {
 		esOpcionValida =
@@ -29,7 +36,10 @@ int main(void) {
 				cargaDeJugadores();
 				break;
 			case 3:
-				printf("3");
+				calcular(&pAFC, &pCAF, &pCONCACAF, &pCONMEBOL, &pUEFA, &pOFC);
+				/*printf(
+						"→ pAFC: %f.\n→ pCAF: %f.\n→ pCONCACAF: %f.\n→ pCONMEBOL: %f.\n→ pUEFA: %f.\n→ pOFC: %f.\n",
+						pAFC, pCAF, pCONCACAF, pCONMEBOL, pUEFA, pOFC);*/
 				break;
 			case 4:
 				printf("4");
