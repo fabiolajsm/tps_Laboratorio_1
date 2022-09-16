@@ -90,33 +90,39 @@ int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
 			if (arqueros < MAXIMO_ARQUEROS) {
 				ret = 1;
 				arqueros++;
+				printf("%s", mensajeExito);
+			} else {
+				printf("%s", mensajeError);
 			}
 			break;
 		case 2:
 			if (defensores < MAXIMO_DEFENSORES) {
 				ret = 1;
 				defensores++;
+				printf("%s", mensajeExito);
+			} else {
+				printf("%s", mensajeError);
 			}
 			break;
 		case 3:
 			if (mediocampistas < MAXIMO_MEDIOCAMPISTAS) {
 				ret = 1;
 				mediocampistas++;
+				printf("%s", mensajeExito);
+			} else {
+				printf("%s", mensajeError);
 			}
 			break;
 		case 4:
 			if (delanteros < MAXIMO_DELANTEROS) {
 				ret = 1;
 				delanteros++;
+				printf("%s", mensajeExito);
+			} else {
+				printf("%s", mensajeError);
 			}
 			break;
 		}
-	}
-
-	if (ret == 1) {
-		printf("%s", mensajeExito);
-	} else {
-		printf("%s", mensajeError);
 	}
 	return ret;
 }

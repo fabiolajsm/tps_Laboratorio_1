@@ -112,7 +112,6 @@ int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
 			break;
 		}
 	}
-
 	if (ret == 1) {
 		printf("%s", mensajeExito);
 	} else {

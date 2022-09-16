@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "validaciones.h"
 #define GASTO_MAXIMO 1000000
-#define ERROR_INGRESO_COSTOS "Error. Tiene que ser un gasto mayor a 0, numérico y sin decimales.\n"
 #define CIEN 100
 
 int hospedaje = 0;
@@ -33,17 +32,20 @@ void ingresarCostos() {
 		switch (opcion) {
 		case 1:
 			getNumero(&gastoH, "Ingrese gasto del hospedaje:\n",
-			ERROR_INGRESO_COSTOS, 1, GASTO_MAXIMO, 3);
+					"Error. Tiene que ser un gasto mayor a 0, numérico y sin decimales.\n",
+					1, GASTO_MAXIMO, 3);
 			hospedaje += gastoH;
 			break;
 		case 2:
 			getNumero(&gastoC, "Ingrese gasto de la comida:\n",
-			ERROR_INGRESO_COSTOS, 1, GASTO_MAXIMO, 3);
+					"Error. Tiene que ser un gasto mayor a 0, numérico y sin decimales.\n",
+					1, GASTO_MAXIMO, 3);
 			comida += gastoC;
 			break;
 		case 3:
 			getNumero(&gastoT, "Ingrese gasto del transporte:\n",
-			ERROR_INGRESO_COSTOS, 1, GASTO_MAXIMO, 3);
+					"Error. Tiene que ser un gasto mayor a 0, numérico y sin decimales.\n",
+					1, GASTO_MAXIMO, 3);
 			transporte += gastoT;
 			break;
 		}
