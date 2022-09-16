@@ -22,7 +22,7 @@ int main(void) {
 	float pOfc;
 	int totalCostos;
 	int totalConAumento;
-	int aumento = 0;
+	int aumento;
 
 	while (mostrarMenu) {
 		esOpcionValida =

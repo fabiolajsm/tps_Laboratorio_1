@@ -149,14 +149,14 @@ void informarResultados(float pAfc, float pCaf, float pConcacaf,
 				"Error. No se han hecho los cálculos, intente yendo a la opción 3.\n");
 	}
 	printf(
-			"Porcentaje Uefa %.2f\nPorcentaje Conmebol %.2f\nPorcentaje Concacaf %.2f\nPorcentaje Afc %.2f\nPorcentaje Ofc %.2f\nPorcentaje Caf %.2f\n",
+			"Porcentaje Uefa %f\nPorcentaje Conmebol %f\nPorcentaje Concacaf %f\nPorcentaje Afc %f\nPorcentaje Ofc %f\nPorcentaje Caf %f\n",
 			pUefa, pConmebol, pConcacaf, pAfc, pOfc, pCaf);
-	if (aumento != 0) {
+	if (aumento) {
 		printf(
 				"El costo de mantenimiento era de $%d y recibió un aumento de $%d, su nuevo valor es de: $%d\n",
 				totalCostos, aumento, totalConAumento);
 	} else {
-		printf("El costo de mantenimiento es de $%d.\n", totalCostos);
+		printf("El costo de mantenimiento es de $%d\n", totalCostos);
 	}
 
 }

@@ -150,13 +150,13 @@ void informarResultados(float pAfc, float pCaf, float pConcacaf,
 	}
 	printf(
 			"Porcentaje Uefa %.2f\nPorcentaje Conmebol %.2f\nPorcentaje Concacaf %.2f\nPorcentaje Afc %.2f\nPorcentaje Ofc %.2f\nPorcentaje Caf %.2f\n",
-			pUefa, pConmebol, pConcacaf, pAfc, pOfc, pCaf);
+			100.456789, pConmebol, pConcacaf, pAfc, pOfc, pCaf);
 	if (aumento != 0) {
 		printf(
 				"El costo de mantenimiento era de $%d y recibió un aumento de $%d, su nuevo valor es de: $%d\n",
 				totalCostos, aumento, totalConAumento);
 	} else {
-		printf("El costo de mantenimiento es de $%d.\n", totalCostos);
+		printf("El costo de mantenimiento es de $%d\n", totalCostos);
 	}
 
 }

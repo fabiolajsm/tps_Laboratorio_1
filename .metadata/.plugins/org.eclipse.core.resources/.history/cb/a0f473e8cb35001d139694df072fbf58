@@ -22,7 +22,7 @@ int main(void) {
 	float pOfc;
 	int totalCostos;
 	int totalConAumento;
-	int aumento = 0;
+	int aumento;
 
 	while (mostrarMenu) {
 		esOpcionValida =
@@ -40,6 +40,7 @@ int main(void) {
 			case 3:
 				calcular(&pAfc, &pCaf, &pConcacaf, &pConmebol, &pUefa, &pOfc,
 						&totalCostos, &totalConAumento, &aumento);
+
 				break;
 			case 4:
 				informarResultados(pAfc, pCaf, pConcacaf, pConmebol, pUefa,
