@@ -134,19 +134,19 @@ float divisionDecimales(float numA, float numB) {
 	return numA / numB;
 }
 
-int esOpcionDisponible(int mantenimiento, int jugadores) {
-	int ret = -1;
-	if (mantenimiento < 1 && jugadores < 1) {
+int esOpcionDisponible(int totalCostos, int jugadoresIngresados) {
+	int ret = 0;
+	if (totalCostos < 1 && jugadoresIngresados < 1) {
 		printf(
 				"Error. No hay costos de mantenimiento ni jugadores ingresados. Intente yendo a la opción 1 y a la 2.\n");
-	} else if (mantenimiento < 1) {
+	} else if (totalCostos < 1) {
 		printf(
 				"Error. No hay costos de mantenimiento ingresados. Intente yendo a la opción 1.\n");
-	} else if (jugadores < 1) {
+	} else if (jugadoresIngresados < 1) {
 		printf(
 				"Error. No hay jugadores ingresados. Intente yendo a la opción 2.\n");
 	} else {
-		ret = 0;
+		ret = 1;
 	}
 	return ret;
 }

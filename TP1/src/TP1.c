@@ -15,12 +15,15 @@ int main(void) {
 	int esOpcionValida;
 	int opcion;
 	// para mostrar despues:
-	float pAFC;
-	float pCAF;
-	float pCONCACAF;
-	float pCONMEBOL;
-	float pUEFA;
-	float pOFC;
+	float pAfc;
+	float pCaf;
+	float pConcacaf;
+	float pConmebol;
+	float pUefa;
+	float pOfc;
+	int totalCostos;
+	int totalConAumento;
+	int aumento;
 
 	while (mostrarMenu) {
 		esOpcionValida =
@@ -36,13 +39,13 @@ int main(void) {
 				cargaDeJugadores();
 				break;
 			case 3:
-				calcular(&pAFC, &pCAF, &pCONCACAF, &pCONMEBOL, &pUEFA, &pOFC);
-				/*printf(
-						"→ pAFC: %f.\n→ pCAF: %f.\n→ pCONCACAF: %f.\n→ pCONMEBOL: %f.\n→ pUEFA: %f.\n→ pOFC: %f.\n",
-						pAFC, pCAF, pCONCACAF, pCONMEBOL, pUEFA, pOFC);*/
+				calcular(&pAfc, &pCaf, &pConcacaf, &pConmebol, &pUefa, &pOfc,
+						&totalCostos, &totalConAumento, &aumento);
+
 				break;
 			case 4:
-				printf("4");
+				informarResultados(pAfc, pCaf, pConcacaf, pConmebol, pUefa,
+						pOfc, totalCostos, totalConAumento, aumento);
 				break;
 			case 5:
 				mostrarMenu = 0;

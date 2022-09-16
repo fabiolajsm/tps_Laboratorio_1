@@ -8,13 +8,14 @@ int hospedaje = 0;
 int comida = 0;
 int transporte = 0;
 // Confederaciones:
-float AFC = 0;
-float CAF = 0;
-float CONCACAF = 0;
-float CONMEBOL = 0;
-float UEFA = 0;
-float OFC = 0;
+float afc = 0;
+float caf = 0;
+float concacaf = 0;
+float conmebol = 0;
+float uefa = 0;
+float ofc = 0;
 float totalJugadores = 0;
+int calculosHechos = 0;
 
 void ingresarCostos() {
 	int opcion;
@@ -58,22 +59,22 @@ static void agregarConfederacion(int opcion) {
 	if (opcion > 0) {
 		switch (opcion) {
 		case 1:
-			AFC++;
+			afc++;
 			break;
 		case 2:
-			CAF++;
+			caf++;
 			break;
 		case 3:
-			CONCACAF++;
+			concacaf++;
 			break;
 		case 4:
-			CONMEBOL++;
+			conmebol++;
 			break;
 		case 5:
-			UEFA++;
+			uefa++;
 			break;
 		case 6:
-			OFC++;
+			ofc++;
 			break;
 		}
 	}
@@ -120,20 +121,52 @@ void cargaDeJugadores() {
  c. Si la mayoría del plantel está compuesta por jugadores de la confederación europea el costo
  de mantenimiento recibe un aumento del 35%.*/
 
-void calcular(float *pAFC, float *pCAF, float *pCONCACAF, float *pCONMEBOL,
-		float *pUEFA, float *pOFC) {
-	int totalCostos = hospedaje + comida + transporte;
+void calcular(float *pAfc, float *pCaf, float *pConcacaf, float *pConmebol,
+		float *pUefa, float *pOfc, int *totalCostos, int *totalConAumento,
+		int *aumento) {
+	int costos = hospedaje + comida + transporte;
+	if (pAfc != NULL && pCaf != NULL && pConcacaf != NULL && pConmebol != NULL
+			&& pUefa != NULL && pOfc != NULL && totalCostos != NULL
+			&& totalConAumento != NULL && aumento != NULL
+			&& esOpcionDisponible(costos, totalJugadores)) {
+		*pAfc = divisionDecimales(afc, totalJugadores) * CIEN;
+		*pCaf = divisionDecimales(caf, totalJugadores) * CIEN;
+		*pConcacaf = divisionDecimales(concacaf, totalJugadores) * CIEN;
+		*pConmebol = divisionDecimales(conmebol, totalJugadores) * CIEN;
+		*pUefa = divisionDecimales(uefa, totalJugadores) * CIEN;
+		*pOfc = divisionDecimales(ofc, totalJugadores) * CIEN;
+		*totalCostos = costos;
 
-	if (pAFC != NULL && pCAF != NULL && pCONCACAF != NULL && pCONMEBOL != NULL
-			&& pUEFA != NULL && pOFC != NULL
-			&& esOpcionDisponible(totalCostos, totalJugadores) == 0) {
-		*pAFC = divisionDecimales(AFC, totalJugadores) * CIEN;
-		*pCAF = divisionDecimales(CAF, totalJugadores) * CIEN;
-		*pCONCACAF = divisionDecimales(CONCACAF, totalJugadores) * CIEN;
-		*pCONMEBOL = divisionDecimales(CONMEBOL, totalJugadores) * CIEN;
-		*pUEFA = divisionDecimales(UEFA, totalJugadores) * CIEN;
-		*pOFC = divisionDecimales(OFC, totalJugadores) * CIEN;
+		if (uefa > afc && uefa > caf && uefa > concacaf && uefa > conmebol
+				&& uefa > ofc) {
+			*aumento = costos * 0.35;
+			*totalConAumento = costos * 1.35;
+		}
+		calculosHechos = 1;
 		printf("Se realizaron exitosamente los cálculos.\n");
 	}
+}
+
+/*Se deberá imprimir todos los datos calculados en el punto anterior y si el costo de
+ mantenimiento recibió un aumento se debe informar el valor original, el valor del aumento
+ y el valor actualizado con el aumento agregado.*/
+void informarResultados(float pAfc, float pCaf, float pConcacaf,
+		float pConmebol, float pUefa, float pOfc, int totalCostos,
+		int totalConAumento, int aumento) {
+	if (!calculosHechos) {
+		printf(
+				"Error. No se han hecho los cálculos, intente yendo a la opción 3.\n");
+	}
+	printf(
+			"Porcentaje Uefa %f\nPorcentaje Conmebol %f\nPorcentaje Concacaf %f\nPorcentaje Afc %f\nPorcentaje Ofc %f\nPorcentaje Caf %f\n",
+			pUefa, pConmebol, pConcacaf, pAfc, pOfc, pCaf);
+	if (aumento) {
+		printf(
+				"El costo de mantenimiento era de $%d y recibió un aumento de $%d, su nuevo valor es de: $%d\n",
+				totalCostos, aumento, totalConAumento);
+	} else {
+		printf("El costo de mantenimiento es de $%d\n", totalCostos);
+	}
+
 }
 

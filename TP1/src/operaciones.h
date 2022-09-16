@@ -10,6 +10,9 @@
 
 void ingresarCostos();
 void cargaDeJugadores();
-void calcular(float *pAFC, float *pCAF, float *pCONCACAF, float *pCONMEBOL,
-		float *pUEFA, float *pOFC);
+void calcular(float *pAfc, float *pCaf, float *pConcacaf, float *pConmebol,
+		float *pUefa, float *pOfc, int *totalCostos, int *totalConAumento, int *aumento);
+void informarResultados(float pAfc, float pCaf, float pConcacaf,
+		float pConmebol, float pUefa, float pOfc, int totalCostos,
+		int totalConAumento, int aumento);
 #endif /* OPERACIONES_H_ */
