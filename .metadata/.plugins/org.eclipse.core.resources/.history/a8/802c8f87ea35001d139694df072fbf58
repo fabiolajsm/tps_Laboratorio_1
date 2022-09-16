@@ -14,12 +14,12 @@ int main(void) {
 	int mostrarMenu = 1;
 	int esOpcionValida;
 	int opcion;
-	float porcentajeAfc;
-	float porcentajeCaf;
-	float porcentajeConcacaf;
-	float porcentajeConmebol;
-	float porcentajeUefa;
-	float porcentajeOfc;
+	float promedioAfc;
+	float promedioCaf;
+	float promedioConcacaf;
+	float promedioConmebol;
+	float promedioUefa;
+	float promedioOfc;
 	int totalCostos;
 	int totalConAumento;
 	int aumento = 0;
@@ -38,15 +38,15 @@ int main(void) {
 				cargarJugadores();
 				break;
 			case 3:
-				calcularResultados(&porcentajeAfc, &porcentajeCaf,
-						&porcentajeConcacaf, &porcentajeConmebol,
-						&porcentajeUefa, &porcentajeOfc, &totalCostos,
-						&totalConAumento, &aumento);
+				calcularResultados(&promedioAfc, &promedioCaf,
+						&promedioConcacaf, &promedioConmebol, &promedioUefa,
+						&promedioOfc, &totalCostos, &totalConAumento, &aumento);
+				printf("promedioUefa %f\n", promedioUefa);
 				break;
 			case 4:
-				informarResultados(porcentajeAfc, porcentajeCaf,
-						porcentajeConcacaf, porcentajeConmebol, porcentajeUefa,
-						porcentajeOfc, totalCostos, totalConAumento, aumento);
+				informarResultados(promedioAfc, promedioCaf, promedioConcacaf,
+						promedioConmebol, promedioUefa, promedioOfc,
+						totalCostos, totalConAumento, aumento);
 				break;
 			case 5:
 				mostrarMenu = 0;

@@ -39,14 +39,13 @@ int main(void) {
 				break;
 			case 3:
 				calcularResultados(&porcentajeAfc, &porcentajeCaf,
-						&porcentajeConcacaf, &porcentajeConmebol,
-						&porcentajeUefa, &porcentajeOfc, &totalCostos,
-						&totalConAumento, &aumento);
+						&porcentajeConcacaf, &porcentajeConmebol, &porcentajeUefa,
+						&porcentajeOfc, &totalCostos, &totalConAumento, &aumento);
 				break;
 			case 4:
-				informarResultados(porcentajeAfc, porcentajeCaf,
-						porcentajeConcacaf, porcentajeConmebol, porcentajeUefa,
-						porcentajeOfc, totalCostos, totalConAumento, aumento);
+				informarResultados(porcentajeAfc, porcentajeCaf, porcentajeConcacaf,
+						porcentajeConmebol, porcentajeUefa, porcentajeOfc,
+						totalCostos, totalConAumento, aumento);
 				break;
 			case 5:
 				mostrarMenu = 0;

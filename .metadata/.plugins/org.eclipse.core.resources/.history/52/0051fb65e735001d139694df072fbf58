@@ -13,7 +13,7 @@ int defensores = 0;
 int mediocampistas = 0;
 int delanteros = 0;
 
-static int esNumero(char cadena[]) {
+static int esNumerica(char cadena[]) {
 	int i = 0;
 	int retorno = 1;
 	if (cadena != NULL && strlen(cadena) > 0) {
@@ -35,22 +35,22 @@ static int obtenerInt(int *pResultado) {
 	fgets(buffer, sizeof(buffer), stdin);
 	buffer[strlen(buffer) - 1] = '\0';
 
-	if (esNumero(buffer) == 1) {
+	if (esNumerica(buffer) == 1) {
 		*pResultado = atoi(buffer);
-		ret = 0;
+		ret = 1;
 	}
 	return ret;
 }
 
-int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError,
-		int minimo, int maximo, int intentos, int validarDisponible) {
+int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError, int minimo,
+		int maximo, int intentos, int validarDisponible) {
 	int ret = -1;
 	int num;
 
 	if (pResultado != NULL && mensaje != NULL && mensajeError != NULL) {
 		while (intentos > 0) {
 			printf("%s", mensaje);
-			if (obtenerInt(&num) == 0) {
+			if (obtenerInt(&num) == 1) {
 				if (num <= maximo && num >= minimo) {
 					*pResultado = num;
 					ret = 0;

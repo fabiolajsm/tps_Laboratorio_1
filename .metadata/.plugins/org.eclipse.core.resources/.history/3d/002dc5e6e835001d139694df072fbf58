@@ -37,20 +37,20 @@ static int obtenerInt(int *pResultado) {
 
 	if (esNumero(buffer) == 1) {
 		*pResultado = atoi(buffer);
-		ret = 0;
+		ret = 1;
 	}
 	return ret;
 }
 
-int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError,
-		int minimo, int maximo, int intentos, int validarDisponible) {
+int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError, int minimo,
+		int maximo, int intentos, int validarDisponible) {
 	int ret = -1;
 	int num;
 
 	if (pResultado != NULL && mensaje != NULL && mensajeError != NULL) {
 		while (intentos > 0) {
 			printf("%s", mensaje);
-			if (obtenerInt(&num) == 0) {
+			if (obtenerInt(&num) == 1) {
 				if (num <= maximo && num >= minimo) {
 					*pResultado = num;
 					ret = 0;

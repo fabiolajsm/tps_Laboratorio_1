@@ -78,7 +78,7 @@ static void agregarConfederacion(int opcion) {
 	}
 }
 
-void cargarJugadores() {
+void cargaDeJugadores() {
 	int esCamisetaValida = 0;
 	int esPosicionValida = 0;
 	int numeroCamiseta = 0;
@@ -113,9 +113,9 @@ void cargarJugadores() {
 	mostrarCantidadJugadores();
 }
 
-void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf,
-		float *pConmebol, float *pUefa, float *pOfc, int *totalCostos,
-		int *totalConAumento, int *aumento) {
+void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf, float *pConmebol,
+		float *pUefa, float *pOfc, int *totalCostos, int *totalConAumento,
+		int *aumento) {
 	int costos = hospedaje + comida + transporte;
 	if (pAfc != NULL && pCaf != NULL && pConcacaf != NULL && pConmebol != NULL
 			&& pUefa != NULL && pOfc != NULL && totalCostos != NULL
@@ -145,17 +145,16 @@ void informarResultados(float pAfc, float pCaf, float pConcacaf,
 	if (!calculosHechos) {
 		printf(
 				"Error. No se han hecho los cálculos, intente yendo a la opción 3.\n");
-	} else {
+	}
+	printf(
+			"Porcentaje Uefa %.2f\nPorcentaje Conmebol %.2f\nPorcentaje Concacaf %.2f\nPorcentaje Afc %.2f\nPorcentaje Ofc %.2f\nPorcentaje Caf %.2f\n",
+			pUefa, pConmebol, pConcacaf, pAfc, pOfc, pCaf);
+	if (aumento != 0) {
 		printf(
-				"Porcentaje Uefa %.2f\nPorcentaje Conmebol %.2f\nPorcentaje Concacaf %.2f\nPorcentaje Afc %.2f\nPorcentaje Ofc %.2f\nPorcentaje Caf %.2f\n",
-				pUefa, pConmebol, pConcacaf, pAfc, pOfc, pCaf);
-		if (aumento != 0) {
-			printf(
-					"El costo de mantenimiento era de $%d y recibió un aumento de $%d, su nuevo valor es de: $%d\n",
-					totalCostos, aumento, totalConAumento);
-		} else {
-			printf("El costo de mantenimiento es de $%d.\n", totalCostos);
-		}
+				"El costo de mantenimiento era de $%d y recibió un aumento de $%d, su nuevo valor es de: $%d\n",
+				totalCostos, aumento, totalConAumento);
+	} else {
+		printf("El costo de mantenimiento es de $%d.\n", totalCostos);
 	}
 }
 

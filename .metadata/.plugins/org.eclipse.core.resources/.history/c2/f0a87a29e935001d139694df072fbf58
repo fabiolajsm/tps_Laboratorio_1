@@ -3,9 +3,9 @@
 
 void ingresarCostos();
 void cargarJugadores();
-void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf,
-		float *pConmebol, float *pUefa, float *pOfc, int *totalCostos,
-		int *totalConAumento, int *aumento);
+void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf, float *pConmebol,
+		float *pUefa, float *pOfc, int *totalCostos, int *totalConAumento,
+		int *aumento);
 void informarResultados(float pAfc, float pCaf, float pConcacaf,
 		float pConmebol, float pUefa, float pOfc, int totalCostos,
 		int totalConAumento, int aumento);

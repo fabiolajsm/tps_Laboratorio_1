@@ -42,8 +42,8 @@ static int obtenerInt(int *pResultado) {
 	return ret;
 }
 
-int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError,
-		int minimo, int maximo, int intentos, int validarDisponible) {
+int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError, int minimo,
+		int maximo, int intentos, int validarDisponible) {
 	int ret = -1;
 	int num;
 

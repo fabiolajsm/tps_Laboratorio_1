@@ -1,6 +1,9 @@
-14:28:46 **** Incremental Build of configuration Debug for project TP1 ****
+15:20:00 **** Incremental Build of configuration Debug for project TP1 ****
 make all 
 make: No se hace nada para 'all'.
-14:29:00 **** Incremental Build of configuration Debug for project TP1 ****
+15:20:34 **** Incremental Build of configuration Debug for project TP1 ****
+make all 
+make: No se hace nada para 'all'.
+15:22:28 **** Incremental Build of configuration Debug for project TP1 ****
 make all 
 make: No se hace nada para 'all'.

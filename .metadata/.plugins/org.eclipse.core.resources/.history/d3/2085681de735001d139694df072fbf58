@@ -26,23 +26,23 @@ void ingresarCostos() {
 	int gastoT;
 
 	esOpcionValida =
-			obtenerNumero(&opcion,
+			getNumero(&opcion,
 					"Elija que gasto desea ingresar:\n1) Costo de hospedaje.\n2) Costo de comida.\n3) Costo de transporte.\n",
 					"Error. Opción inválida.\n", 1, 3, 3);
 	if (esOpcionValida == 0) {
 		switch (opcion) {
 		case 1:
-			obtenerNumero(&gastoH, "Ingrese gasto del hospedaje:\n",
+			getNumero(&gastoH, "Ingrese gasto del hospedaje:\n",
 			ERROR_INGRESO_COSTOS, 1, GASTO_MAXIMO, 3);
 			hospedaje += gastoH;
 			break;
 		case 2:
-			obtenerNumero(&gastoC, "Ingrese gasto de la comida:\n",
+			getNumero(&gastoC, "Ingrese gasto de la comida:\n",
 			ERROR_INGRESO_COSTOS, 1, GASTO_MAXIMO, 3);
 			comida += gastoC;
 			break;
 		case 3:
-			obtenerNumero(&gastoT, "Ingrese gasto del transporte:\n",
+			getNumero(&gastoT, "Ingrese gasto del transporte:\n",
 			ERROR_INGRESO_COSTOS, 1, GASTO_MAXIMO, 3);
 			transporte += gastoT;
 			break;
@@ -78,7 +78,7 @@ static void agregarConfederacion(int opcion) {
 	}
 }
 
-void cargarJugadores() {
+void cargaDeJugadores() {
 	int esCamisetaValida = 0;
 	int esPosicionValida = 0;
 	int numeroCamiseta = 0;
@@ -86,7 +86,7 @@ void cargarJugadores() {
 	int confederacion;
 
 	while (!esCamisetaValida) {
-		obtenerNumero(&numeroCamiseta, "Ingrese número de camiseta:\n",
+		getNumero(&numeroCamiseta, "Ingrese número de camiseta:\n",
 				"Error. Tiene que ser un número, del 1 al 22.\n", 1, 22, 22);
 		esCamisetaValida =
 				camisetaDisponible(numeroCamiseta,
@@ -94,7 +94,7 @@ void cargarJugadores() {
 						"Error. Número de camiseta no disponible, pruebe con otro número.\n");
 	}
 	while (!esPosicionValida) {
-		obtenerNumero(&posicion,
+		getNumero(&posicion,
 				"Ingrese que posición quiere jugar:\n1. Arquero.\n2. Defensa.\n3. Mediocampo.\n4. Delantero.\n",
 				"Error. Tienes que seleccionar el número de la posición que quieres jugar (opciones del 1 al 4).\n",
 				1, 4, 3);
@@ -103,7 +103,7 @@ void cargarJugadores() {
 						"Posición seleccionada exitosamente.\n",
 						"Error. La posición que elegiste no tiene cupos, vuelve a intentarlo seleccionando otra.\n");
 	}
-	obtenerNumero(&confederacion,
+	getNumero(&confederacion,
 			"Selecciona el número de la confederación donde quieres jugar:\n1. AFC en Asia.\n2. CAF en África.\n3. CONCACAF en zona del Norte.\n4. CONMEBOL en Sudamérica.\n5. UEFA en Europa.\n6. OFC en Oceanía.\n",
 			"Error. Tienes que seleccionar la confederación con un número disponible en las opciones(opciones del 1 al 6).\n",
 			1, 6, 3);
@@ -113,9 +113,9 @@ void cargarJugadores() {
 	mostrarCantidadJugadores();
 }
 
-void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf,
-		float *pConmebol, float *pUefa, float *pOfc, int *totalCostos,
-		int *totalConAumento, int *aumento) {
+void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf, float *pConmebol,
+		float *pUefa, float *pOfc, int *totalCostos, int *totalConAumento,
+		int *aumento) {
 	int costos = hospedaje + comida + transporte;
 	if (pAfc != NULL && pCaf != NULL && pConcacaf != NULL && pConmebol != NULL
 			&& pUefa != NULL && pOfc != NULL && totalCostos != NULL
@@ -145,17 +145,16 @@ void informarResultados(float pAfc, float pCaf, float pConcacaf,
 	if (!calculosHechos) {
 		printf(
 				"Error. No se han hecho los cálculos, intente yendo a la opción 3.\n");
-	} else {
+	}
+	printf(
+			"Porcentaje Uefa %.2f\nPorcentaje Conmebol %.2f\nPorcentaje Concacaf %.2f\nPorcentaje Afc %.2f\nPorcentaje Ofc %.2f\nPorcentaje Caf %.2f\n",
+			pUefa, pConmebol, pConcacaf, pAfc, pOfc, pCaf);
+	if (aumento != 0) {
 		printf(
-				"Porcentaje Uefa %.2f\nPorcentaje Conmebol %.2f\nPorcentaje Concacaf %.2f\nPorcentaje Afc %.2f\nPorcentaje Ofc %.2f\nPorcentaje Caf %.2f\n",
-				pUefa, pConmebol, pConcacaf, pAfc, pOfc, pCaf);
-		if (aumento != 0) {
-			printf(
-					"El costo de mantenimiento era de $%d y recibió un aumento de $%d, su nuevo valor es de: $%d\n",
-					totalCostos, aumento, totalConAumento);
-		} else {
-			printf("El costo de mantenimiento es de $%d.\n", totalCostos);
-		}
+				"El costo de mantenimiento era de $%d y recibió un aumento de $%d, su nuevo valor es de: $%d\n",
+				totalCostos, aumento, totalConAumento);
+	} else {
+		printf("El costo de mantenimiento es de $%d.\n", totalCostos);
 	}
 }
 
