@@ -5,7 +5,7 @@ int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError,
 		int minimo, int maximo, int intentos);
 int camisetaDisponible(int num, char *mensajeExito, char *mensajeError);
 int posicionDisponible(int num, char *mensajeExito, char *mensajeError);
-void mostrarCantidadJugadores(void);
+void mostrarCantidadJugadores();
 float divisionDecimales(float numA, float numB);
 int esOpcionDisponible(int totalCostos, int jugadoresIngresados);
 

@@ -5,7 +5,6 @@
 #define ERROR_INGRESO_COSTOS "Error. Tiene que ser un gasto mayor a 0, numérico y sin decimales.\n"
 #define CIEN 100
 
-// Costos de mantenimiento:
 int hospedaje = 0;
 int comida = 0;
 int transporte = 0;
@@ -19,7 +18,7 @@ float ofc = 0;
 float totalJugadores = 0;
 int calculosHechos = 0;
 
-void ingresarCostos(void) {
+void ingresarCostos() {
 	int opcion;
 	int esOpcionValida;
 	int gastoH;
@@ -79,7 +78,7 @@ static void agregarConfederacion(int opcion) {
 	}
 }
 
-void cargarJugadores(void) {
+void cargarJugadores() {
 	int esCamisetaValida = 0;
 	int esPosicionValida = 0;
 	int numeroCamiseta = 0;

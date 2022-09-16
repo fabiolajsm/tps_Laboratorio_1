@@ -145,7 +145,7 @@ int esOpcionDisponible(int totalCostos, int jugadoresIngresados) {
 	return ret;
 }
 
-void mostrarCantidadJugadores(void) {
+void mostrarCantidadJugadores() {
 	printf(
 			"→ Arqueros: %d\n→ Defensores: %d\n→ Mediocampistas: %d\n→ Delanteros: %d\n",
 			arqueros, defensores, mediocampistas, delanteros);
