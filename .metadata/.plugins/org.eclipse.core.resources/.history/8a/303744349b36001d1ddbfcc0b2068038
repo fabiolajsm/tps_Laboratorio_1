@@ -128,12 +128,12 @@ float divisionDecimales(float numA, float numB) {
 	return numA / numB;
 }
 
-int sePuedeCalcular(int costos, int jugadoresIngresados) {
+int esOpcionDisponible(int totalCostos, int jugadoresIngresados) {
 	int ret = 0;
-	if (costos < 1 && jugadoresIngresados < 1) {
+	if (totalCostos < 1 && jugadoresIngresados < 1) {
 		printf(
 				"Error. No hay costos de mantenimiento ni jugadores ingresados. Intente yendo a la opción 1 y a la 2.\n");
-	} else if (costos < 1) {
+	} else if (totalCostos < 1) {
 		printf(
 				"Error. No hay costos de mantenimiento ingresados. Intente yendo a la opción 1.\n");
 	} else if (jugadoresIngresados < 1) {

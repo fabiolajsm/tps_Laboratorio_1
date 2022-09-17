@@ -128,7 +128,7 @@ float divisionDecimales(float numA, float numB) {
 	return numA / numB;
 }
 
-int sePuedeCalcular(int costos, int jugadoresIngresados) {
+int esOpcionDisponible(int costos, int jugadoresIngresados) {
 	int ret = 0;
 	if (costos < 1 && jugadoresIngresados < 1) {
 		printf(

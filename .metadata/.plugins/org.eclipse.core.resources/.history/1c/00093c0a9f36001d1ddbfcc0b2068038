@@ -1,0 +1,26 @@
+#ifndef OPERACIONES_H_
+#define OPERACIONES_H_
+
+/**
+ * @fn ingresarCostos(void)
+ * @brief Opción 1 del menú. Acá se ingresan todos los costos de mantenimiento.
+ * @param void No recibe parámetros
+ * @return No retorna nada
+ * */
+void ingresarCostos(void);
+/**
+ * @fn cargarJugadores(void)
+ * @brief Opción 2 del menú. Acá se ingresan jugadores y se selecciona camiseta, posición y confederación.
+ * @param void No recibe parámetros
+ * @return No retorna nada
+ * */
+void cargarJugadores(void);
+
+void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf,
+		float *pConmebol, float *pUefa, float *pOfc, int *totalCostos,
+		int *totalConAumento, int *aumento);
+void informarResultados(float pAfc, float pCaf, float pConcacaf,
+		float pConmebol, float pUefa, float pOfc, int totalCostos,
+		int totalConAumento, int aumento);
+
+#endif /* OPERACIONES_H_ */
