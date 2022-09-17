@@ -35,12 +35,12 @@ void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf,
 /**
  * @fn void informarResultados(float, float, float, float, float, float, int, int, int)
  * @brief Opción 4 del menú. Acá se muestran todos los cálculos.
- * @param pAfc El porcentaje de jugadores del AFC.
- * @param pCaf El porcentaje de jugadores del CAF.
- * @param pConcacaf El porcentaje de jugadores del CONCACAF.
- * @param pConmebol El porcentaje de jugadores del CONMEBOL.
- * @param pUefa El porcentaje de jugadores de la UEFA.
- * @param pOfc El porcentaje de jugadores del OFC.
+ * @param pAfc El porcentaje de jugadores de esa confederación.
+ * @param pCaf El porcentaje de jugadores de esa confederación.
+ * @param pConcacaf El porcentaje de jugadores de esa confederación.
+ * @param pConmebol El porcentaje de jugadores de esa confederación.
+ * @param pUefa El porcentaje de jugadores de esa confederación.
+ * @param pOfc El porcentaje de jugadores de esa confederación.
  * @param totalCostos El total de costos de mantenimiento.
  * @param totalConAumento El total de costos con el aumento incluido.
  * @param aumento El aumento sobre los precios.

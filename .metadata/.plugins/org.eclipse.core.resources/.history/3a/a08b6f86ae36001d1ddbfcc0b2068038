@@ -18,12 +18,12 @@ void cargarJugadores(void);
 /**
  * @fn void calcularResultados(float*, float*, float*, float*, float*, float*, int*, int*, int*)
  * @brief Opción 3 del menú. Acá se hacen todos los cálculos.
- * @param pAfc Dirección de memoria donde se va a guardar el porcentaje de jugadores del AFC.
- * @param pCaf Dirección de memoria donde se va a guardar el porcentaje de jugadores del CAF.
- * @param pConcacaf Dirección de memoria donde se va a guardar el porcentaje de jugadores del CONCACAF.
- * @param pConmebol Dirección de memoria donde se va a guardar el porcentaje de jugadores del CONMEBOL.
- * @param pUefa Dirección de memoria donde se va a guardar el porcentaje de jugadores de la UEFA.
- * @param pOfc Dirección de memoria donde se va a guardar el porcentaje de jugadores del OFC.
+ * @param pAfc Dirección de memoria donde se va a guardar el porcentaje de jugadores de esa confederación.
+ * @param pCaf Dirección de memoria donde se va a guardar el porcentaje de jugadores de esa confederación.
+ * @param pConcacaf Dirección de memoria donde se va a guardar el porcentaje de jugadores de esa confederación.
+ * @param pConmebol Dirección de memoria donde se va a guardar el porcentaje de jugadores de esa confederación.
+ * @param pUefa Dirección de memoria donde se va a guardar el porcentaje de jugadores de esa confederación.
+ * @param pOfc Dirección de memoria donde se va a guardar el porcentaje de jugadores de esa confederación.
  * @param totalCostos Dirección de memoria donde se va a guardar el total de costos de mantenimiento.
  * @param totalConAumento Dirección de memoria donde se va a guardar el total de costos con el aumento incluido.
  * @param aumento Dirección de memoria donde se va a guardar el aumento sobre los precios.
@@ -35,12 +35,12 @@ void calcularResultados(float *pAfc, float *pCaf, float *pConcacaf,
 /**
  * @fn void informarResultados(float, float, float, float, float, float, int, int, int)
  * @brief Opción 4 del menú. Acá se muestran todos los cálculos.
- * @param pAfc El porcentaje de jugadores del AFC.
- * @param pCaf El porcentaje de jugadores del CAF.
- * @param pConcacaf El porcentaje de jugadores del CONCACAF.
- * @param pConmebol El porcentaje de jugadores del CONMEBOL.
- * @param pUefa El porcentaje de jugadores de la UEFA.
- * @param pOfc El porcentaje de jugadores del OFC.
+ * @param pAfc El porcentaje de jugadores de esa confederación.
+ * @param pCaf El porcentaje de jugadores de esa confederación.
+ * @param pConcacaf El porcentaje de jugadores de esa confederación.
+ * @param pConmebol El porcentaje de jugadores de esa confederación.
+ * @param pUefa El porcentaje de jugadores de esa confederación.
+ * @param pOfc El porcentaje de jugadores de esa confederación.
  * @param totalCostos El total de costos de mantenimiento.
  * @param totalConAumento El total de costos con el aumento incluido.
  * @param aumento El aumento sobre los precios.

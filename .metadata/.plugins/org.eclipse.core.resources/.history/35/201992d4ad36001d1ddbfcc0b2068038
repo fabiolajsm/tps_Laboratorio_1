@@ -16,7 +16,7 @@ int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError,
 		int minimo, int maximo, int intentos);
 /**
  * @fn int camisetaDisponible(int, char *, char *)
- * @brief Esta función selecciona un número de camiseta y valida que no se repitan los números ya escojidos.
+ * @brief Esta función selecciona un numero de camiseta y valida que no se repitan los números ya escojidos.
  * @param num Número de camiseta ingresado.
  * @param mensaje Mensaje a mostrar si el número de camiseta fue seleccionado exitosamente.
  * @param mensajeError Mensaje a mostrar si el número de camiseta no está disponible.
@@ -26,9 +26,9 @@ int camisetaDisponible(int num, char *mensajeExito, char *mensajeError);
 /**
  * @fn int posicionDisponible(int, char *, char *)
  * @brief Esta función valida que la posición seleccionada para jugar tenga cupos disponibles.
- * @param num Es la posición a jugar ingresada.
- * @param mensaje Mensaje a mostrar si la posición fue seleccionada exitosamente.
- * @param mensajeError Mensaje a mostrar si no está disponible la posición seleccionada.
+ * @param num Indica la posición a jugar ingresada.
+ * @param mensaje Mensaje a mostrar si la posición fue seleccionado exitosamente.
+ * @param mensajeError Mensaje a mostrar si no está disponible la posición seleccionada porque está completa.
  * @return Retorna 1 si está disponible la camiseta y 0 si ya fue seleccionada.
  * */
 int posicionDisponible(int num, char *mensajeExito, char *mensajeError);
@@ -49,7 +49,7 @@ void mostrarCantidadJugadores(void);
 float divisionDecimales(float numA, float numB);
 /**
  * @fn int sePuedeCalcular(int, int)
- * @brief Esta función valida si la opción tres para calcular puede ser usada.
+ * @brief Esta función valida si la opción tres para calcular, puede ser usada.
  * @param costos La suma de los costos de mantenimiento.
  * @param jugadoresIngresados La cantidad de jugadores que se han ingresado.
  * @return Retorna 0 si no hay costos ni/o jugadores ingresados y 1 si ya fueron ingresados y se pueden realizar los cálculos.
