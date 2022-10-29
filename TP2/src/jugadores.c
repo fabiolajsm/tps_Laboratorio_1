@@ -41,7 +41,7 @@ static int buscarPosicionVacia(eJugador jugadores[], int largo) {
 void darAltaJugador(eJugador jugadores[], int largo) {
 	int posicionVacia = buscarPosicionVacia(jugadores, largo);
 	eJugador auxJugador;
-	static int idJugador = 200;
+	static int idJugador = 1;
 
 	if (jugadores != NULL && largo > 0 && posicionVacia != -1) {
 		auxJugador.id = idJugador;
@@ -52,18 +52,18 @@ void darAltaJugador(eJugador jugadores[], int largo) {
 		utn_obtenerNumeroShort(&auxJugador.numeroCamiseta,
 				"Ingrese número de camiseta:\n",
 				"Error. Tiene ingresar un número del 1 al 22, en formato numérico y sin decimales.\n",
-				0, 22);
+				1, 22);
 		utn_obtenerNumero(&auxJugador.idConfederacion,
 				"Confederaciones disponibles:\n1. AFC\n2. CAF\n3. CONCACAF\n4. CONMEBOL\n5. UEFA\n6. OFC\n",
 				"Error. Tiene que elegir la confederación con el número, ejemplo: '1 = AFC'.\n",
 				1, 6);
 		utn_obtenerFlotante(&auxJugador.salario, "Ingrese salario:\n",
-				"Error. Tiene ingresar el salario en formato numérico y debe ser mayor a 0.\n",
-				1, 2500);
+				"Error. No puede tener un salario mayor a $800.000. Tiene ingresar el salario en formato numérico y debe ser mayor a 0.\n",
+				1, 800000);
 		utn_obtenerNumeroShort(&auxJugador.aniosContrato,
 				"Ingrese años de contrato:\n",
-				"Error. Tiene ingresar los años de contrato en formato numérico y sin decimales.\n",
-				0, 26);
+				"Error. No puede tener más de 26 o menos de 1 año de contrato. Tiene ingresar los años en formato numérico y sin decimales.\n",
+				1, 26);
 		auxJugador.isEmpty = 0;
 		jugadores[posicionVacia] = auxJugador;
 
@@ -129,6 +129,7 @@ void darBajaJugador(eJugador jugadores[], int largo) {
 
 static void mostrarJugador(eJugador item) {
 	char confederacion[31];
+
 	switch (item.idConfederacion) {
 	case 1:
 		strcpy(confederacion, "AFC");
@@ -152,24 +153,29 @@ static void mostrarJugador(eJugador item) {
 		strcpy(confederacion, "Sin asignar");
 		break;
 	}
-	printf("- ID Jugador: %d\n", item.id);
-	printf("- Nombre: %s\n", item.nombre);
-	printf("- Posición: %s\n", item.posicion);
-	printf("- Numero de camiseta: %d\n", item.numeroCamiseta);
-	printf("- Confederacion: %s\n", confederacion);
-	printf("- Salario: $%.2f\n", item.salario);
-	printf("- Años de contrato: %d\n", item.aniosContrato);
-	printf("--------------\n");
+	printf("| %*d | %*s | %*s |     %*d | $%*.2f | %*s |         %*d |\n", -3,
+			item.id, -28, item.nombre, -11, item.posicion, -8,
+			item.numeroCamiseta, -11, item.salario, -13, confederacion, -8,
+			item.aniosContrato);
 }
 
 static void mostrarJugadores(eJugador jugadores[], int largo) {
 	if (jugadores != NULL && largo > 0) {
-		printf("Jugadores:\n");
+		printf("\t\t\t\t\t- Listado de Jugadores -\n");
+		printf(
+				"=====================================================================================================================\n");
+		printf("|%*s|%*s|%*s|%*s|%*s|%*s|%*s|\n", -5, " ID", -30,
+				"        NOMBRE", -14, " POSICIÓN", -15, " Nº CAMISETA", -14,
+				" SUELDO", -16, " CONFEDERACIÓN", -2, " AÑOS de CONTRATO ");
+		printf(
+				"---------------------------------------------------------------------------------------------------------------------\n");
 		for (int i = 0; i < largo; i++) {
 			if (jugadores[i].isEmpty == 0) {
 				mostrarJugador(jugadores[i]);
 			}
 		}
+		printf(
+				"=====================================================================================================================\n");
 	}
 }
 
