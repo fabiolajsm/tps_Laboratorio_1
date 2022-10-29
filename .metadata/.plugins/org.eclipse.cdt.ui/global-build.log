@@ -1,4 +1,4 @@
-19:40:07 **** Incremental Build of configuration Debug for project TP2 ****
+20:24:42 **** Incremental Build of configuration Debug for project TP2 ****
 make all 
 Building file: ../src/informes.c
 Invoking: GCC C Compiler

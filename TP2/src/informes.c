@@ -200,6 +200,120 @@ static void informarPorcentajePorConfederacion(eJugador jugadores[], int largo) 
 	}
 }
 
+static int obtenerRegion(char *pResultado, int idConfederacion) {
+	int retorno = -1;
+
+	if (pResultado != NULL && idConfederacion > 0) {
+		switch (idConfederacion) {
+		case 1:
+			strcpy(pResultado, "ASIA");
+			retorno = 1;
+			break;
+		case 2:
+			strcpy(pResultado, "AFRICA");
+			retorno = 2;
+			break;
+		case 3:
+			strcpy(pResultado, "NORTE Y CENTRO AMERICA");
+			retorno = 3;
+			break;
+		case 4:
+			strcpy(pResultado, "SUDAMERICA");
+			retorno = 4;
+			break;
+		case 5:
+			strcpy(pResultado, "EUROPA");
+			retorno = 5;
+			break;
+		case 6:
+			strcpy(pResultado, "OCEANIA");
+			retorno = 6;
+			break;
+		}
+	}
+	return retorno;
+}
+
+static void mostrarJugadoresPorRegion(eJugador jugadores[], int largo,
+		int idRegion) {
+	if (jugadores != NULL && largo > 0 && idRegion > 0) {
+		for (int i = 0; i < largo; i++) {
+			if (jugadores[i].isEmpty == 0) {
+				if (jugadores[i].idConfederacion == idRegion) {
+					printf("- %s.\n", jugadores[i].nombre);
+				}
+			}
+		}
+	}
+}
+
+static void informarRegion(eJugador jugadores[], int largo) {
+	char region[31];
+	int idConfederacion;
+	int totalJugadores = 0;
+	int afc = 0;
+	int caf = 0;
+	int concacaf = 0;
+	int conmebol = 0;
+	int uefa = 0;
+	int ofc = 0;
+
+	if (jugadores != NULL && largo > 0) {
+		for (int i = 0; i < largo; i++) {
+			if (jugadores[i].isEmpty == 0) {
+				totalJugadores++;
+				switch (jugadores[i].idConfederacion) {
+				case 1:
+					afc++;
+					break;
+				case 2:
+					caf++;
+					break;
+				case 3:
+					concacaf++;
+					break;
+				case 4:
+					conmebol++;
+					break;
+				case 5:
+					uefa++;
+					break;
+				case 6:
+					ofc++;
+					break;
+				}
+			}
+		}
+		if (afc > caf && afc > concacaf && afc > conmebol && afc > uefa
+				&& afc > ofc) {
+			idConfederacion = 1;
+		}
+		if (caf > afc && caf > concacaf && caf > conmebol && caf > uefa
+				&& caf > ofc) {
+			idConfederacion = 2;
+		}
+		if (concacaf > afc && concacaf > caf && concacaf > conmebol
+				&& concacaf > uefa && concacaf > ofc) {
+			idConfederacion = 3;
+		}
+		if (conmebol > afc && conmebol > caf && conmebol > concacaf
+				&& conmebol > uefa && conmebol > ofc) {
+			idConfederacion = 4;
+		}
+		if (uefa > afc && uefa > caf && uefa > concacaf && uefa > conmebol
+				&& uefa > ofc) {
+			idConfederacion = 5;
+		}
+		if (ofc > afc && ofc > caf && ofc > concacaf && ofc > conmebol
+				&& ofc > uefa) {
+			idConfederacion = 6;
+		}
+		obtenerRegion(region, idConfederacion);
+		printf("- La región con más jugadores es: %s, y sus jugadores son:\n", region);
+		mostrarJugadoresPorRegion(jugadores, largo, idConfederacion);
+	}
+}
+
 void informarDatos(eJugador jugadores[], int largo) {
 	int hayJugadores = existenJugadores(jugadores, largo);
 	int opcion;
@@ -231,7 +345,7 @@ void informarDatos(eJugador jugadores[], int largo) {
 					informarPorcentajePorConfederacion(jugadores, largo);
 					break;
 				case 6:
-					printf("6\n");
+					informarRegion(jugadores, largo);
 					break;
 				case 7:
 					mostrarSubmenu = 0;
