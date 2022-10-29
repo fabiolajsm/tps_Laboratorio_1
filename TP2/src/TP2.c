@@ -9,6 +9,7 @@ int main(void) {
 	int mostrarMenu = 1;
 	int esOpcionValida;
 	int opcion;
+	int confirmacion;
 
 	eJugador jugadores[CANTIDAD_JUGADORES];
 	inicializarJugadores(jugadores, CANTIDAD_JUGADORES); // Tiene que ser hasta 3000 jugadores y hay 6 confederaciones
@@ -34,7 +35,12 @@ int main(void) {
 				informarDatos(jugadores, CANTIDAD_JUGADORES);
 				break;
 			case 5:
-				mostrarMenu = 0;
+				if (utn_obtenerNumero(&confirmacion,
+						"Seguro desea salir?\n1. Si.\n2. No.\n",
+						"Error. Opción inválida, tiene que elegir un número del 1 al 2.\n",
+						1, 2) == 0 && confirmacion == 1) {
+					mostrarMenu = 0;
+				}
 				break;
 			}
 		}
