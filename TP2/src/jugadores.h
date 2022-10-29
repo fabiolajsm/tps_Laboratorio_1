@@ -54,10 +54,26 @@ void darBajaJugador(eJugador jugadores[], int largo);
 /**
  * @fn void modificarJugador(eJugador[], int)
  * @brief Esta función lista todos los jugadores y pide el ID de un jugador, si lo encuentra muestra un submenu que permite modificar todos sus datos.
- * @param jugadores Variable que contiene los articulos.
+ * @param jugadores Variable que contiene los jugadores.
  * @param largo Largo de la variable jugadores.
  * @return void
  * */
 void modificarJugador(eJugador jugadores[], int largo);
+/**
+ * @fn int existenJugadores(eJugador[], int)
+ * @brief Esta función verifica que existan jugadores cargados.
+ * @param jugadores Variable que contiene los jugadores.
+ * @param largo Largo de la variable jugadores.
+ * @return retorna 1 si hay jugadores y 0 si no.
+ * */
+int existenJugadores(eJugador jugadores[], int largo);
+/**
+ * @fn void mostrarJugadores(eJugador[], int)
+ * @brief Esta función imprime por consola la variable jugadores mostrándolos en una tabla.
+ * @param jugadores Variable que contiene los jugadores.
+ * @param largo Largo de la variable jugadores.
+ * @return void.
+ * */
+void mostrarJugadores(eJugador jugadores[], int largo);
 
 #endif /* JUGADORES_H_ */

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "utn.h"
 #include "jugadores.h"
+#include "informes.h"
 #define CANTIDAD_JUGADORES 10
 
 int main(void) {
@@ -30,7 +31,7 @@ int main(void) {
 				modificarJugador(jugadores, CANTIDAD_JUGADORES);
 				break;
 			case 4:
-				printf("4\n");
+				informarDatos(jugadores, CANTIDAD_JUGADORES);
 				break;
 			case 5:
 				mostrarMenu = 0;

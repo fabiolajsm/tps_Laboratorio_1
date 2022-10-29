@@ -45,35 +45,43 @@ void darAltaJugador(eJugador jugadores[], int largo) {
 
 	if (jugadores != NULL && largo > 0 && posicionVacia != -1) {
 		auxJugador.id = idJugador;
-		utn_obtenerTexto(auxJugador.nombre, 50, "Ingresa nombre:\n",
-		ERROR_TEXTO, 50);
-		utn_obtenerTexto(auxJugador.posicion, 50, "Ingresa posición:\n",
-		ERROR_TEXTO, 50);
-		utn_obtenerNumeroShort(&auxJugador.numeroCamiseta,
-				"Ingrese número de camiseta:\n",
-				"Error. Tiene ingresar un número del 1 al 22, en formato numérico y sin decimales.\n",
-				1, 22);
-		utn_obtenerNumero(&auxJugador.idConfederacion,
-				"Confederaciones disponibles:\n1. AFC\n2. CAF\n3. CONCACAF\n4. CONMEBOL\n5. UEFA\n6. OFC\n",
-				"Error. Tiene que elegir la confederación con el número, ejemplo: '1 = AFC'.\n",
-				1, 6);
-		utn_obtenerFlotante(&auxJugador.salario, "Ingrese salario:\n",
-				"Error. No puede tener un salario mayor a $800.000. Tiene ingresar el salario en formato numérico y debe ser mayor a 0.\n",
-				1, 800000);
-		utn_obtenerNumeroShort(&auxJugador.aniosContrato,
-				"Ingrese años de contrato:\n",
-				"Error. No puede tener más de 26 o menos de 1 año de contrato. Tiene ingresar los años en formato numérico y sin decimales.\n",
-				1, 26);
-		auxJugador.isEmpty = 0;
-		jugadores[posicionVacia] = auxJugador;
+		if (utn_obtenerTexto(auxJugador.nombre, 50, "Ingresa nombre:\n",
+		ERROR_TEXTO, 50) == 0
+				&& utn_obtenerTexto(auxJugador.posicion, 50,
+						"Ingresa posición:\n",
+						ERROR_TEXTO, 50) == 0
+				&& utn_obtenerNumeroShort(&auxJugador.numeroCamiseta,
+						"Ingrese número de camiseta:\n",
+						"Error. Tiene ingresar un número del 1 al 22, en formato numérico y sin decimales.\n",
+						1, 22) == 0
+				&& utn_obtenerNumero(&auxJugador.idConfederacion,
+						"Confederaciones disponibles:\n1. AFC\n2. CAF\n3. CONCACAF\n4. CONMEBOL\n5. UEFA\n6. OFC\n",
+						"Error. Tiene que elegir la confederación con el número, ejemplo: '1 = AFC'.\n",
+						1, 6) == 0
+				&& utn_obtenerFlotante(&auxJugador.salario,
+						"Ingrese salario:\n",
+						"Error. No puede tener un salario mayor a $800.000. Tiene ingresar el salario en formato numérico y debe ser mayor a 0.\n",
+						1, 800000) == 0
+				&& utn_obtenerNumeroShort(&auxJugador.aniosContrato,
+						"Ingrese años de contrato:\n",
+						"Error. No puede tener más de 26 o menos de 1 año de contrato. Tiene ingresar los años en formato numérico y sin decimales.\n",
+						1, 26) == 0) {
 
-		printf("Jugador dado de alta exitosamente! Número identificador: %d.\n",
-				idJugador);
-		idJugador++;
+			auxJugador.isEmpty = 0;
+			jugadores[posicionVacia] = auxJugador;
+
+			printf(
+					"Jugador dado de alta exitosamente! Número identificador: %d.\n",
+					idJugador);
+			idJugador++;
+		} else {
+			printf("Error. Intentelo más tarde.\n");
+		}
+
 	}
 }
 
-static int existenJugadores(eJugador jugadores[], int largo) {
+int existenJugadores(eJugador jugadores[], int largo) {
 	int retorno = -1;
 
 	if (jugadores != NULL && largo > 0) {
@@ -101,30 +109,6 @@ int buscarJugadorPorId(eJugador jugadores[], int largo, int id) {
 	}
 
 	return retorno;
-}
-
-void darBajaJugador(eJugador jugadores[], int largo) {
-	int id;
-	int indice;
-	int esValido;
-	int hayJugadores = existenJugadores(jugadores, largo);
-
-	if (jugadores != NULL && largo > 0 && hayJugadores == 0) {
-		esValido = utn_obtenerNumero(&id,
-				"Ingrese el ID del jugador que va a dar de baja:\n",
-				"Error. El ID tiene que ser numérico y no tiene decimales.\n",
-				1, ID_MAXIMO);
-		indice = buscarJugadorPorId(jugadores, largo, id);
-
-		if (indice != -1 && esValido == 0) {
-			jugadores[indice].isEmpty = 1;
-			printf("Jugador dado de baja exitosamente!\n");
-		} else {
-			printf(ID_NO_ENCONTRADO);
-		}
-	} else {
-		printf(NO_HAY_JUGADORES);
-	}
 }
 
 static void mostrarJugador(eJugador item) {
@@ -159,7 +143,7 @@ static void mostrarJugador(eJugador item) {
 			item.aniosContrato);
 }
 
-static void mostrarJugadores(eJugador jugadores[], int largo) {
+void mostrarJugadores(eJugador jugadores[], int largo) {
 	if (jugadores != NULL && largo > 0) {
 		printf("\t\t\t\t\t- Listado de Jugadores -\n");
 		printf(
@@ -202,6 +186,31 @@ static int listarJugadores(eJugador jugadores[], int largo) {
 	}
 
 	return ret;
+}
+
+void darBajaJugador(eJugador jugadores[], int largo) {
+	int id;
+	int indice;
+	int esValido;
+	int hayJugadores = existenJugadores(jugadores, largo);
+
+	if (jugadores != NULL && largo > 0 && hayJugadores == 0
+			&& listarJugadores(jugadores, largo) == 0) {
+		esValido = utn_obtenerNumero(&id,
+				"Ingrese el ID del jugador que va a dar de baja:\n",
+				"Error. El ID tiene que ser numérico y no tiene decimales.\n",
+				1, ID_MAXIMO);
+		indice = buscarJugadorPorId(jugadores, largo, id);
+
+		if (indice != -1 && esValido == 0) {
+			jugadores[indice].isEmpty = 1;
+			printf("Jugador dado de baja exitosamente!\n");
+		} else {
+			printf(ID_NO_ENCONTRADO);
+		}
+	} else {
+		printf(NO_HAY_JUGADORES);
+	}
 }
 
 static void modificarJugadorSubmenu(eJugador jugadores[], int indice) {
