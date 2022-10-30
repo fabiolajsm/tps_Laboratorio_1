@@ -12,13 +12,6 @@
 typedef struct {
 	int id;
 	char nombre[LARGO];
-	char region[LARGO];
-	int anioCreacion;
-} eConfederacion;
-
-typedef struct {
-	int id;
-	char nombre[LARGO];
 	char posicion[LARGO];
 	short numeroCamiseta;
 	int idConfederacion;

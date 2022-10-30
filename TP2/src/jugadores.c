@@ -198,7 +198,7 @@ void darBajaJugador(eJugador jugadores[], int largo) {
 			&& listarJugadores(jugadores, largo) == 0) {
 		esValido = utn_obtenerNumero(&id,
 				"Ingrese el ID del jugador que va a dar de baja:\n",
-				"Error. El ID tiene que ser numérico y no tiene decimales.\n",
+				"Error. El ID tiene que ser numérico, mayor a 0 y no tener decimales.\n",
 				1, ID_MAXIMO);
 		indice = buscarJugadorPorId(jugadores, largo, id);
 
@@ -280,7 +280,7 @@ void modificarJugador(eJugador jugadores[], int largo) {
 		if (listarJugadores(jugadores, largo) == 0) {
 			utn_obtenerNumero(&id,
 					"Ingrese el ID del jugador que va a modificar:\n",
-					"Error. El ID tiene que ser numérico y no tiene decimales.\n",
+					"Error. El ID tiene que ser numérico, mayor a 0 y no tener decimales.\n",
 					1, ID_MAXIMO);
 			indice = buscarJugadorPorId(jugadores, largo, id);
 
