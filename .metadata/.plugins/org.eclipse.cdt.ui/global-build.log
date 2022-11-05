@@ -1,40 +1,6 @@
-19:21:01 **** Build of configuration Debug for project TP3 ****
+16:41:49 **** Incremental Build of configuration Debug for project TP_3 ****
 make all 
-Building file: ../.metadata/.plugins/org.eclipse.cdt.make.core/specs.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF".metadata/.plugins/org.eclipse.cdt.make.core/specs.d" -MT".metadata/.plugins/org.eclipse.cdt.make.core/specs.o" -o ".metadata/.plugins/org.eclipse.cdt.make.core/specs.o" "../.metadata/.plugins/org.eclipse.cdt.make.core/specs.c"
-Finished building: ../.metadata/.plugins/org.eclipse.cdt.make.core/specs.c
- 
-Building file: ../Controller.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Controller.d" -MT"Controller.o" -o "Controller.o" "../Controller.c"
-Finished building: ../Controller.c
- 
-Building file: ../Jugador.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Jugador.d" -MT"Jugador.o" -o "Jugador.o" "../Jugador.c"
-Finished building: ../Jugador.c
- 
-Building file: ../Seleccion.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"Seleccion.d" -MT"Seleccion.o" -o "Seleccion.o" "../Seleccion.c"
-Finished building: ../Seleccion.c
- 
-Building file: ../main.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"main.d" -MT"main.o" -o "main.o" "../main.c"
-Finished building: ../main.c
- 
-Building file: ../parser.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"parser.d" -MT"parser.o" -o "parser.o" "../parser.c"
-Finished building: ../parser.c
- 
-Building target: TP3
-Invoking: GCC C Linker
-gcc  -o "TP3"  ./.metadata/.plugins/org.eclipse.cdt.make.core/specs.o  ./Controller.o ./Jugador.o ./Seleccion.o ./main.o ./parser.o    /home/fsuarez/eclipse-workspace/tp3_linux/LinkedList.a
-Finished building target: TP3
- 
-19:23:04 **** Incremental Build of configuration Debug for project TP3 ****
+make: No se hace nada para 'all'.
+16:41:52 **** Incremental Build of configuration Debug for project TP_3 ****
 make all 
 make: No se hace nada para 'all'.
