@@ -4,6 +4,8 @@
 // Archivos
 int controller_cargarJugadoresDesdeTexto(char *path,
 		LinkedList *pArrayListJugador);
+int controller_generarJugadoresDesdeBinario(char *path,
+		LinkedList *pArrayListJugador);
 int controller_cargarJugadoresDesdeBinario(char *path,
 		LinkedList *pArrayListJugador);
 int controller_guardarJugadoresModoTexto(char *path,
@@ -22,7 +24,7 @@ int controller_removerJugador(LinkedList *pArrayListJugador,
 		LinkedList *pArrayListSeleccion);
 int controller_obtenerIndexSeleccionPorId(LinkedList *pArrayListSeleccion,
 		int idSeleccion);
-void controller_convocarJugadores(LinkedList *pArrayListJugador,
+int controller_convocarJugadores(LinkedList *pArrayListJugador,
 		LinkedList *pArrayListSeleccion);
 int controller_editarSeleccion(LinkedList *pArrayListSeleccion);
 

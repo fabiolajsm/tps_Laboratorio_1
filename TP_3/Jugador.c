@@ -7,7 +7,7 @@
 #include "Controller.h"
 #include "utn.h"
 
-Jugador* jug_new() {
+Jugador* jug_new(void) {
 	Jugador *aux = NULL;
 	aux = (Jugador*) malloc(sizeof(Jugador));
 	return aux;

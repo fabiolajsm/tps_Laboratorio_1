@@ -43,8 +43,63 @@ int controller_cargarJugadoresDesdeTexto(char *path,
  */
 int controller_cargarJugadoresDesdeBinario(char *path,
 		LinkedList *pArrayListJugador) {
-	return 1;
+	int retorno = -1;
+	FILE *pArchivo = NULL;
+	Jugador *pAuxJugador;
+
+	if (path != NULL && pArrayListJugador != NULL) {
+		pArchivo = fopen(path, "rb");
+		if (pArchivo != NULL) {
+			fread(&pAuxJugador, sizeof(Jugador), 1, pArchivo);
+			while (!feof(pArchivo)) {
+				if (pAuxJugador != NULL) {
+					controller_listarJugador(pAuxJugador);
+				}
+				fread(&pAuxJugador, sizeof(Jugador), 1, pArchivo);
+			}
+			retorno = 0;
+		}
+		fclose(pArchivo);
+	}
+
+	return retorno;
 }
+
+int controller_generarJugadoresDesdeBinario(char *path,
+		LinkedList *pArrayListJugador) {
+	int retorno = -1;
+	FILE *pArchivo = NULL;
+	Jugador *auxPunteroJugador = NULL;
+	int idSeleccion;
+	int idSeleccionIngresada;
+
+	if (path != NULL) {
+		pArchivo = fopen(path, "ab");
+		if (pArchivo != NULL) {
+			if (utn_obtenerNumero(&idSeleccionIngresada,
+					"Ingrese el ID de la confederación en donde están los jugadores que desee guardar:\n",
+					"Error. El ID tiene que ser un numero entero, mayor a 0 y menor a 32.\n",
+					0, 32) == 0) {
+				for (int i = 0; i < ll_len(pArrayListJugador); i++) {
+					auxPunteroJugador = (Jugador*) ll_get(pArrayListJugador, i);
+					if (auxPunteroJugador != NULL
+							&& jug_getIdSeleccion(auxPunteroJugador,
+									&idSeleccion) == 1) {
+						if (idSeleccion > 0
+								&& idSeleccionIngresada == idSeleccion) {
+							fwrite(&auxPunteroJugador, sizeof(Jugador), 1,
+									pArchivo);
+							retorno = 0;
+						}
+					}
+				}
+				fclose(pArchivo);
+			}
+		}
+	}
+	return retorno;
+}
+
 /** \brief Guarda los datos de los jugadores en el archivo jugadores.csv (modo texto).
  *
  * \param path char*
@@ -54,8 +109,38 @@ int controller_cargarJugadoresDesdeBinario(char *path,
  */
 int controller_guardarJugadoresModoTexto(char *path,
 		LinkedList *pArrayListJugador) {
-	return 1;
+	int retorno = -1;
+	FILE *pArchivo = NULL;
+	Jugador *auxPunteroJugador = NULL;
+	int id;
+	char nombreCompleto[100];
+	int edad;
+	char posicion[30];
+	char nacionalidad[30];
+	int idSeleccion;
+
+	pArchivo = fopen(path, "w");
+	if (path != NULL && pArrayListJugador != NULL && pArchivo != NULL) {
+		fprintf(pArchivo,
+				"id,nombreCompleto,edad,posicion,nacionalidad,idSeleccion\n");
+		for (int i = 0; i < ll_len(pArrayListJugador); i++) {
+			auxPunteroJugador = ll_get(pArrayListJugador, i);
+			if (jug_getId(auxPunteroJugador, &id)
+					&& jug_getNombreCompleto(auxPunteroJugador, nombreCompleto)
+					&& jug_getEdad(auxPunteroJugador, &edad)
+					&& jug_getPosicion(auxPunteroJugador, posicion)
+					&& jug_getNacionalidad(auxPunteroJugador, nacionalidad)
+					&& jug_getIdSeleccion(auxPunteroJugador, &idSeleccion)) {
+				fprintf(pArchivo, "%d,%s,%d,%s,%s,%d\n", id, nombreCompleto,
+						edad, posicion, nacionalidad, idSeleccion);
+				retorno = 0;
+			}
+		}
+		fclose(pArchivo);
+	}
+	return retorno;
 }
+
 /** \brief Guarda los datos de los jugadores en el archivo binario.
  *
  * \param path char*
@@ -99,7 +184,32 @@ int controller_cargarSeleccionesDesdeTexto(char *path,
  */
 int controller_guardarSeleccionesModoTexto(char *path,
 		LinkedList *pArrayListSeleccion) {
-	return 1;
+	int retorno = -1;
+	FILE *pArchivo = NULL;
+	Seleccion *auxPunteroSeleccion = NULL;
+	int id;
+	char pais[30];
+	char confederacion[30];
+	int convocados;
+
+	pArchivo = fopen(path, "w");
+	if (path != NULL && pArrayListSeleccion != NULL && pArchivo != NULL) {
+		fprintf(pArchivo, "id,pais,confederacion,convocados\n");
+		for (int i = 0; i < ll_len(pArrayListSeleccion); i++) {
+			auxPunteroSeleccion = ll_get(pArrayListSeleccion, i);
+			if (selec_getId(auxPunteroSeleccion, &id)
+					&& selec_getPais(auxPunteroSeleccion, pais)
+					&& selec_getConfederacion(auxPunteroSeleccion,
+							confederacion)
+					&& selec_getConvocados(auxPunteroSeleccion, &convocados)) {
+				fprintf(pArchivo, "%d,%s,%s,%d\n", id, pais, confederacion,
+						convocados);
+				retorno = 0;
+			}
+		}
+		fclose(pArchivo);
+	}
+	return retorno;
 }
 
 /** \brief Obtiene los Ids del archivo idsGenerados.txt (modo texto).
@@ -418,9 +528,6 @@ int controller_removerJugador(LinkedList *pArrayListJugador,
 		} else {
 			printf("Error. ID de jugador no encontrado.\n");
 		}
-	} else {
-		printf(
-				"Error. No se puede acceder a esta opción por el momento, intente más tarde.\n");
 	}
 
 	if (retorno == 0) {
@@ -613,8 +720,9 @@ static int controller_quitarJugadorSeleccion(LinkedList *pArrayListJugador,
  * \param pArrayListSeleccion LinkedList*
  * \return void
  */
-void controller_convocarJugadores(LinkedList *pArrayListJugador,
+int controller_convocarJugadores(LinkedList *pArrayListJugador,
 		LinkedList *pArrayListSeleccion) {
+	int retorno = -1;
 	int mostrarSubmenu = 1;
 	int esOpcionValida;
 	int opcion;
@@ -645,9 +753,11 @@ void controller_convocarJugadores(LinkedList *pArrayListJugador,
 					mostrarSubmenu = 0;
 					break;
 				}
+				retorno = 0;
 			}
 		}
 	}
+	return retorno;
 }
 
 /** \brief Edita la selección
@@ -791,6 +901,7 @@ int controller_ordenarYListar(LinkedList *pArrayListJugador,
 			}
 			break;
 		}
+		retorno = 0;
 	}
 
 	return retorno;

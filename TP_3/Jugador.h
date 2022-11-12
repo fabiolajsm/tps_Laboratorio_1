@@ -12,7 +12,7 @@ typedef struct {
 	int idSeleccion;
 } Jugador;
 
-Jugador* jug_new();
+Jugador* jug_new(void);
 Jugador* jug_newParametros(char *idStr, char *nombreCompletoStr, char *edadStr,
 		char *posicionStr, char *nacionalidadStr, char *idSelccionStr);
 
