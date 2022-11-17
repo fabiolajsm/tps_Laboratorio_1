@@ -54,8 +54,7 @@ int jug_getId(Jugador *this, int *id) {
 
 int jug_setNombreCompleto(Jugador *this, char *nombreCompleto) {
 	int retorno = 0;
-
-	if (this != NULL && esTexto(nombreCompleto)) {
+	if (this != NULL) {
 		strcpy(this->nombreCompleto, nombreCompleto);
 		retorno = 1;
 	}
@@ -225,10 +224,9 @@ void controller_listarJugador(Jugador *item) {
 			&& jug_getIdSeleccion(item, &idSeleccion) == 1
 			&& controller_ObtenerConfederacion(textoSeleccion, idSeleccion)
 					== 0) {
-
-		printf("| %*d | %*s | %*d | %*s | %*s | %*s  |\n", -3, item->id, -28,
-				item->nombreCompleto, -5, item->edad, -24, item->posicion, -18,
-				item->nacionalidad, -17, textoSeleccion);
+		printf("| %*d | %*s | %*d | %*s | %*s | %*s  |\n", -3, id, -28,
+				nombreCompleto, -5, edad, -24, posicion, -18, nacionalidad, -17,
+				textoSeleccion);
 	}
 }
 

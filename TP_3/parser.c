@@ -5,6 +5,7 @@
 #include "Seleccion.h"
 #include "utn.h"
 #define LARGO 30
+
 /** \brief Parsea los datos de los jugadores desde el archivo jugadores.csv (modo texto).
  *
  * \param path char*
@@ -55,7 +56,37 @@ int parserJugadorDesdeTexto(FILE *pArchivo, LinkedList *pArrayListJugador) {
  *
  */
 int parser_JugadorFromBinary(FILE *pArchivo, LinkedList *pArrayListJugador) {
-	return 1;
+	int retorno = -1;
+	Jugador *pAuxJugador = jug_new();
+	int cantidadElementos;
+	int id;
+	char nombreCompleto[100];
+	int edad;
+	char posicion[30];
+	char nacionalidad[30];
+	int idSeleccion;
+
+	if (pArrayListJugador != NULL && pArchivo != NULL) {
+		while (!feof(pArchivo)) {
+			cantidadElementos = fread(pAuxJugador, sizeof(Jugador), 1,
+					pArchivo);
+			if (cantidadElementos == 1 && jug_getId(pAuxJugador, &id) == 1
+					&& jug_getNombreCompleto(pAuxJugador, nombreCompleto) == 1
+					&& jug_getEdad(pAuxJugador, &edad) == 1
+					&& jug_getPosicion(pAuxJugador, posicion) == 1
+					&& jug_getNacionalidad(pAuxJugador, nacionalidad) == 1
+					&& jug_getIdSeleccion(pAuxJugador, &idSeleccion) == 1) {
+				if (ll_add(pArrayListJugador, pAuxJugador) == 0) {
+					retorno = 0;
+				}
+			} else {
+				free(pAuxJugador);
+				break;
+			}
+		}
+	}
+
+	return retorno;
 }
 
 /** \brief Parsea los datos de los selecciones desde el archivo selecciones.csv (modo texto).

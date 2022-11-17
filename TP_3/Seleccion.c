@@ -101,8 +101,8 @@ void controller_listarSeleccion(Seleccion *item) {
 			&& selec_getPais(item, pais) == 1
 			&& selec_getConfederacion(item, confederacion) == 1
 			&& selec_getConvocados(item, &convocados) == 1) {
-		printf("| %*d | %*s | %*s |       %*d |\n", -3, item->id, -17,
-				item->pais, -13, item->confederacion, -6, item->convocados);
+		printf("| %*d | %*s | %*s |       %*d |\n", -3, id, -17, pais, -13,
+				confederacion, -6, convocados);
 	}
 }
 

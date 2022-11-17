@@ -103,12 +103,7 @@ int esTexto(char *cadena) {
 			if ((cadena[i] < 'A' || cadena[i] > 'Z')
 					&& (cadena[i] < 'a' || cadena[i] > 'z')) {
 				// Acá no es texto
-				if (cadena[i] == ' ' || cadena[i] == '\t'
-						|| cadena[i] == '\v') {
-					retorno = 1;
-				} else {
-					retorno = 0;
-				}
+				retorno = 0;
 				break;
 			}
 		}

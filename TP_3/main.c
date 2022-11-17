@@ -18,6 +18,7 @@ int main() {
 	static int cargaronConvocados = 0;
 	LinkedList *listaJugadores = ll_newLinkedList();
 	LinkedList *listaSelecciones = ll_newLinkedList();
+	LinkedList *listaJugadoresConvocados = ll_newLinkedList();
 
 	while (mostrarMenu) {
 		esOpcionValida =
@@ -129,8 +130,15 @@ int main() {
 							"Error. No se generó el archivo binario de jugadores convocados\n");
 				} else {
 					if (controller_cargarJugadoresDesdeBinario(
-							"jugadoresConvocados.bin", listaJugadores) != 0) {
+							"jugadoresConvocados.bin", listaJugadoresConvocados)
+							== -1) {
 						printf("Error no se pudo leer el archivo\n");
+					} else {
+						if (controller_listarJugadores(listaJugadoresConvocados)
+								== -1) {
+							printf(
+									"Error, no se pudieron listar los jugadores convocados\n");
+						}
 					}
 				}
 				break;

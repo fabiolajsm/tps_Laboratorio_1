@@ -45,23 +45,15 @@ int controller_cargarJugadoresDesdeBinario(char *path,
 		LinkedList *pArrayListJugador) {
 	int retorno = -1;
 	FILE *pArchivo = NULL;
-	Jugador *pAuxJugador;
 
 	if (path != NULL && pArrayListJugador != NULL) {
 		pArchivo = fopen(path, "rb");
-		if (pArchivo != NULL) {
-			fread(&pAuxJugador, sizeof(Jugador), 1, pArchivo);
-			while (!feof(pArchivo)) {
-				if (pAuxJugador != NULL) {
-					controller_listarJugador(pAuxJugador);
-				}
-				fread(&pAuxJugador, sizeof(Jugador), 1, pArchivo);
-			}
+		if (pArchivo != NULL
+				&& parser_JugadorFromBinary(pArchivo, pArrayListJugador) == 0) {
 			retorno = 0;
 		}
 		fclose(pArchivo);
 	}
-
 	return retorno;
 }
 
@@ -70,12 +62,18 @@ int controller_generarJugadoresDesdeBinario(char *path,
 	int retorno = -1;
 	FILE *pArchivo = NULL;
 	Jugador *auxPunteroJugador = NULL;
+	int id;
+	char nombreCompleto[30];
+	int edad;
+	char posicion[30];
+	char nacionalidad[30];
 	int idSeleccion;
 	int idSeleccionIngresada;
 
 	if (path != NULL) {
-		pArchivo = fopen(path, "ab");
+		pArchivo = fopen(path, "w");
 		if (pArchivo != NULL) {
+
 			if (utn_obtenerNumero(&idSeleccionIngresada,
 					"Ingrese el ID de la confederación en donde están los jugadores que desee guardar:\n",
 					"Error. El ID tiene que ser un numero entero, mayor a 0 y menor a 32.\n",
@@ -83,18 +81,26 @@ int controller_generarJugadoresDesdeBinario(char *path,
 				for (int i = 0; i < ll_len(pArrayListJugador); i++) {
 					auxPunteroJugador = (Jugador*) ll_get(pArrayListJugador, i);
 					if (auxPunteroJugador != NULL
+							&& jug_getId(auxPunteroJugador, &id)
+							&& jug_getNombreCompleto(auxPunteroJugador,
+									nombreCompleto)
+							&& jug_getEdad(auxPunteroJugador, &edad)
+							&& jug_getPosicion(auxPunteroJugador, posicion)
+							&& jug_getNacionalidad(auxPunteroJugador,
+									nacionalidad)
 							&& jug_getIdSeleccion(auxPunteroJugador,
-									&idSeleccion) == 1) {
+									&idSeleccion)) {
 						if (idSeleccion > 0
 								&& idSeleccionIngresada == idSeleccion) {
-							fwrite(&auxPunteroJugador, sizeof(Jugador), 1,
-									pArchivo);
-							retorno = 0;
+							if (fwrite(auxPunteroJugador, sizeof(Jugador), 1,
+									pArchivo) > 0) {
+								retorno = 0;
+							}
 						}
 					}
 				}
-				fclose(pArchivo);
 			}
+			fclose(pArchivo);
 		}
 	}
 	return retorno;
@@ -269,33 +275,64 @@ static int controller_generarIDJugador(void) {
  * \return int
  *
  */
+static int asignarPosicion(char *pPosicion, int opcion) {
+	int retorno = -1;
+	if (pPosicion != NULL && opcion > 0) {
+		switch (opcion) {
+		case 1:
+			strcpy(pPosicion, "Arqueros");
+			break;
+		case 2:
+			strcpy(pPosicion, "Defensa");
+			break;
+		case 3:
+			strcpy(pPosicion, "Mediocampo");
+			break;
+		case 4:
+			strcpy(pPosicion, "Delantero");
+			break;
+		}
+		retorno = 0;
+	}
+	return retorno;
+}
+
 int controller_agregarJugador(LinkedList *pArrayListJugador) {
 	int retorno = -1;
 	Jugador *auxPunteroJugador = jug_new();
-	char nombreCompleto[100];
+	char nombreCompleto[30];
+	char apellido[30];
 	int edad;
 	char posicion[30];
+	int posicionElegida;
 	char nacionalidad[30];
 	int id;
 
 	if (pArrayListJugador != NULL) {
 		if (utn_obtenerTexto(nombreCompleto, 100,
-				"Ingrese nombre completo del jugador:\n",
+				"Ingrese nombre del jugador:\n",
 				"Error. El nombre no puede estar vacío o tener más de 100 caracteres y tiene que ser alfabético.\n",
 				100) == 0
+				&& utn_obtenerTexto(apellido, 100,
+						"Ingrese apellido del jugador:\n",
+						"Error. El apellido no puede estar vacío o tener más de 100 caracteres y tiene que ser alfabético.\n",
+						100) == 0
 				&& utn_obtenerNumero(&edad, "Ingrese edad del jugador:\n",
 						"Error. La edad tiene que ser un numero entero, mayor a 10 y menor a 70.\n",
 						10, 70) == 0
-				&& utn_obtenerTexto(posicion, 30,
-						"Ingrese posición del jugador:\n",
-						"Error. La posición tener más de 30 caracteres y tiene que ser alfabético.\n",
-						30) == 0
+				&& utn_obtenerNumero(&posicionElegida,
+						"Ingrese que posición quiere jugar:\n1. Arquero.\n2. Defensa.\n3. Mediocampo.\n4. Delantero.\n",
+						"Error. Tienes que seleccionar el número de la posición a jugar (opciones del 1 al 4).\n",
+						1, 4) == 0
 				&& utn_obtenerTexto(nacionalidad, 30,
 						"Ingrese nacionalidad del jugador:\n",
 						"Error. La nacionalidad tener más de 30 caracteres y tiene que ser alfabético.\n",
 						30) == 0) {
 			id = controller_generarIDJugador();
-			if (id > 370) {
+			if (id > 370 && asignarPosicion(posicion, posicionElegida) == 0) {
+				strcat(nombreCompleto, " ");
+				strcat(nombreCompleto, apellido);
+
 				if (jug_setId(auxPunteroJugador, id) == 1
 						&& jug_setNombreCompleto(auxPunteroJugador,
 								nombreCompleto) == 1
