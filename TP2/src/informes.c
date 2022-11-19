@@ -9,100 +9,77 @@
 #include <string.h>
 #include "utn.h"
 #include "jugadores.h"
+#include "confederaciones.h"
 
-static void listarJugadoresAlfabeticamente(eJugador jugadores[], int largo) {
-	eJugador aux;
+static void listarJugadoresAlfabeticamente(eJugador jugadores[], int largoJ,
+		eConfederacion confederaciones[], int largoC) {
+	eJugador auxJugador;
+	eConfederacion auxConfederacion;
 
-	if (jugadores != NULL && largo > 0) {
-		for (int i = 0; i < largo - 1; i++) {
-			for (int j = 0; j < largo; j++) {
-				if (jugadores[i].isEmpty == 0 && jugadores[j].isEmpty == 0) {
-					// Primero ordeno por confederacion de menor a mayor:
-					if (jugadores[i].idConfederacion
-							< jugadores[j].idConfederacion) {
-						aux = jugadores[i];
-						jugadores[i] = jugadores[j];
-						jugadores[j] = aux;
-					}
-					// Si tiene ID 5 sabemos que tiene que ir de último
-					if (jugadores[j].idConfederacion == 5) {
-						aux = jugadores[i];
-						jugadores[i] = jugadores[j];
-						jugadores[j] = aux;
-					}
-					// Si son de la misma confederación, ordenamos por nombre:
-					if (jugadores[i].idConfederacion
-							== jugadores[j].idConfederacion
-							&& strcmp(jugadores[i].nombre, jugadores[j].nombre)
-									< 0) {
-						aux = jugadores[i];
-						jugadores[i] = jugadores[j];
-						jugadores[j] = aux;
+	if (jugadores != NULL && largoJ > 0 && confederaciones != NULL
+			&& largoC > 0) {
+		// Ordeno las confederaciones por nombre
+		for (int i = 0; i < largoC - 1; i++) {
+			for (int j = 0; j < largoC; j++) {
+				if (confederaciones[i].isEmpty == 0
+						&& confederaciones[j].isEmpty == 0) {
+					if (strcmp(confederaciones[i].nombre,
+							confederaciones[j].nombre) < 0) {
+						auxConfederacion = confederaciones[i];
+						confederaciones[i] = confederaciones[j];
+						confederaciones[j] = auxConfederacion;
 					}
 				}
 			}
 		}
-		mostrarJugadores(jugadores, largo);
+		for (int i = 0; i < largoJ - 1; i++) {
+			for (int j = 0; j < largoJ; j++) {
+				if (jugadores[i].idConfederacion == jugadores[j].idConfederacion
+						&& strcmp(jugadores[i].nombre, jugadores[j].nombre)
+								< 0) {
+					auxJugador = jugadores[i];
+					jugadores[i] = jugadores[j];
+					jugadores[j] = auxJugador;
+				}
+			}
+		}
+
+		mostrarJugadores(jugadores, largoJ, confederaciones, largoC);
 	} else {
 		printf("Error. Intente más tarde.\n");
 	}
 }
 
-static int obtenerConfederacion(char *pResultado, int idConfederacion) {
+static int listarJugadoresPorConfederacion(eJugador jugadores[], int largo,
+		int idConfederacion) {
 	int retorno = -1;
+	if (jugadores != NULL && largo > 0 && idConfederacion > 0) {
+		for (int i = 0; i < largo; i++) {
+			if (jugadores[i].isEmpty == 0
+					&& jugadores[i].idConfederacion == idConfederacion) {
+				printf(" - %s\n", jugadores[i].nombre);
+				retorno = 0;
+			}
 
-	if (pResultado != NULL && idConfederacion > 0) {
-		switch (idConfederacion) {
-		case 1:
-			strcpy(pResultado, "AFC");
-			retorno = 1;
-			break;
-		case 2:
-			strcpy(pResultado, "CAF");
-			retorno = 2;
-			break;
-		case 3:
-			strcpy(pResultado, "CONCACAF");
-			retorno = 3;
-			break;
-		case 4:
-			strcpy(pResultado, "CONMEBOL");
-			retorno = 4;
-			break;
-		case 5:
-			strcpy(pResultado, "UEFA");
-			retorno = 5;
-			break;
-		case 6:
-			strcpy(pResultado, "OFC");
-			retorno = 6;
-			break;
+		}
+
+		if (retorno == -1) {
+			printf(" - No tiene jugadores\n");
 		}
 	}
 	return retorno;
 }
 
-static void listarConfederacionesYSusJugadores(eJugador jugadores[], int largo) {
-	char confederacion[31];
-	int contador = 1;
-	int tieneJugadores = 0;
-
-	if (jugadores != NULL && largo > 0) {
-		while (contador < 7) {
-			tieneJugadores = 0;
-			obtenerConfederacion(confederacion, contador);
-			printf("Jugadores de %s:\n", confederacion);
-			for (int i = 0; i < largo; i++) {
-				if (jugadores[i].isEmpty == 0
-						&& jugadores[i].idConfederacion == contador) {
-					printf("- %s.\n", jugadores[i].nombre);
-					tieneJugadores = 1;
-				}
+static void listarConfederacionesYSusJugadores(eJugador jugadores[],
+		eConfederacion confederaciones[], int largoJ, int largoC) {
+	if (jugadores != NULL && confederaciones != NULL && largoJ > 0
+			&& largoC > 0) {
+		for (int i = 0; i < largoC; i++) {
+			if (confederaciones[i].isEmpty == 0) {
+				printf("-> %s\n", confederaciones[i].nombre);
+				listarJugadoresPorConfederacion(jugadores, largoJ,
+						confederaciones[i].id);
 			}
-			if (tieneJugadores == 0) {
-				printf("- No tiene jugadores.\n");
-			}
-			contador++;
 		}
 	} else {
 		printf("Error. Intente más tarde.\n");
@@ -117,16 +94,17 @@ static void informarSalarios(eJugador jugadores[], int largo) {
 
 	if (jugadores != NULL && largo > 0) {
 		for (int i = 0; i < largo; i++) {
-			if (jugadores[i].salario > 0 && jugadores[i].isEmpty == 0) {
+			if (jugadores[i].isEmpty == 0) {
 				totalJugadores++;
 				totalSalarios = totalSalarios + jugadores[i].salario;
-				promedio = totalSalarios / totalJugadores;
-				if (jugadores[i].salario > promedio) {
-					jugadoresArribaDelPromedio++;
-				}
 			}
 		}
-
+		promedio = totalSalarios / totalJugadores;
+		for (int i = 0; i < largo; i++) {
+			if (jugadores[i].isEmpty == 0 && jugadores[i].salario > promedio) {
+				jugadoresArribaDelPromedio++;
+			}
+		}
 		printf("- Total de salarios: $%.2f\n", totalSalarios);
 		printf("- Promedio de todos los salarios: $%.2f\n", promedio);
 		printf(
@@ -137,101 +115,88 @@ static void informarSalarios(eJugador jugadores[], int largo) {
 	}
 }
 
-static void informarMasAniosDeContrato(eJugador jugadores[], int largo) {
-	int idMayor = 0;
-	char confederacion[31];
+static int sumarAniosContratoPorConfederacion(eJugador jugadores[], int largo,
+		int idConfederacion) {
+	int contador = 0;
 
-	if (jugadores != NULL && largo > 0) {
+	if (jugadores != NULL && largo > 0 && idConfederacion > 0) {
 		for (int i = 0; i < largo; i++) {
-			if (jugadores[i].isEmpty == 0) {
-				if (jugadores[i].idConfederacion > idMayor) {
-					idMayor = jugadores[i].idConfederacion;
-					obtenerConfederacion(confederacion, idMayor);
-				}
+			if (jugadores[i].isEmpty == 0
+					&& jugadores[i].idConfederacion == idConfederacion) {
+				contador = contador + jugadores[i].aniosContrato;
 			}
 		}
-		printf("- Confederación con más años de contrato: %s\n", confederacion);
+	}
+	return contador;
+}
+
+static void informarMasAniosDeContrato(eJugador jugadores[],
+		eConfederacion confederaciones[], int largoJ, int largoC) {
+	eAniosContrato auxAniosContrato;
+	eAniosContrato mayor;
+	mayor.aniosContrato = 0;
+
+	if (jugadores != NULL && largoJ > 0 && confederaciones != NULL
+			&& largoC > 0) {
+		for (int i = 0; i < largoC; i++) {
+			if (confederaciones[i].isEmpty == 0) {
+				auxAniosContrato.idConfederacion = confederaciones[i].id;
+				auxAniosContrato.aniosContrato =
+						sumarAniosContratoPorConfederacion(jugadores, largoJ,
+								confederaciones[i].id);
+				strcpy(auxAniosContrato.nombre, confederaciones[i].nombre);
+				if (auxAniosContrato.aniosContrato > mayor.aniosContrato) {
+					mayor = auxAniosContrato;
+				}
+			}
+
+		}
+
+		printf(
+				"- Confederación con más años de contrato es %s con %d años de contrato\n",
+				mayor.nombre, mayor.aniosContrato);
 	} else {
 		printf("Error. Intente más tarde.\n");
 	}
 }
 
-static void informarPorcentajePorConfederacion(eJugador jugadores[], int largo) {
-	float totalJugadores = 0;
-	float afc = 0;
-	float caf = 0;
-	float concacaf = 0;
-	float conmebol = 0;
-	float uefa = 0;
-	float ofc = 0;
+static int sumarJugadoresPorConfederacion(eJugador jugadores[], int largo,
+		int idConfederacion) {
+	int contador = 0;
 
-	if (jugadores != NULL && largo > 0) {
+	if (jugadores != NULL && largo > 0 && idConfederacion > 0) {
 		for (int i = 0; i < largo; i++) {
-			if (jugadores[i].isEmpty == 0) {
-				totalJugadores++;
-				switch (jugadores[i].idConfederacion) {
-				case 1:
-					afc++;
-					break;
-				case 2:
-					caf++;
-					break;
-				case 3:
-					concacaf++;
-					break;
-				case 4:
-					conmebol++;
-					break;
-				case 5:
-					uefa++;
-					break;
-				case 6:
-					ofc++;
-					break;
-				}
+			if (jugadores[i].isEmpty == 0
+					&& jugadores[i].idConfederacion == idConfederacion) {
+				contador++;
 			}
 		}
-		printf("- Porcentaje AFC: %.2f\n", afc / totalJugadores);
-		printf("- Porcentaje CAF: %.2f\n", caf / totalJugadores);
-		printf("- Porcentaje CONCACAF: %.2f\n", concacaf / totalJugadores);
-		printf("- Porcentaje CONMEBOL: %.2f\n", conmebol / totalJugadores);
-		printf("- Porcentaje UEFA: %.2f\n", uefa / totalJugadores);
-		printf("- Porcentaje OFC: %.2f\n", ofc / totalJugadores);
 	}
+	return contador;
 }
 
-static int obtenerRegion(char *pResultado, int idConfederacion) {
-	int retorno = -1;
+static void informarPorcentajePorConfederacion(eJugador jugadores[],
+		eConfederacion confederaciones[], int largoJ, int largoC) {
+	float totalJugadores = 0;
+	float totalPorConfederacion;
 
-	if (pResultado != NULL && idConfederacion > 0) {
-		switch (idConfederacion) {
-		case 1:
-			strcpy(pResultado, "ASIA");
-			retorno = 1;
-			break;
-		case 2:
-			strcpy(pResultado, "AFRICA");
-			retorno = 2;
-			break;
-		case 3:
-			strcpy(pResultado, "NORTE Y CENTRO AMERICA");
-			retorno = 3;
-			break;
-		case 4:
-			strcpy(pResultado, "SUDAMERICA");
-			retorno = 4;
-			break;
-		case 5:
-			strcpy(pResultado, "EUROPA");
-			retorno = 5;
-			break;
-		case 6:
-			strcpy(pResultado, "OCEANIA");
-			retorno = 6;
-			break;
+	if (jugadores != NULL && largoJ > 0 && confederaciones != NULL
+			&& largoC > 0) {
+		for (int i = 0; i < largoJ; i++) {
+			if (jugadores[i].isEmpty == 0) {
+				totalJugadores++;
+			}
+		}
+
+		for (int i = 0; i < largoC; i++) {
+			if (confederaciones[i].isEmpty == 0) {
+				totalPorConfederacion = sumarJugadoresPorConfederacion(
+						jugadores, largoJ, confederaciones[i].id);
+				printf("- Porcentaje %s: %.2f\n", confederaciones[i].nombre,
+						(totalPorConfederacion / totalJugadores) * 100);
+			}
 		}
 	}
-	return retorno;
 }
 
 static void mostrarJugadoresPorRegion(eJugador jugadores[], int largo,
@@ -247,105 +212,68 @@ static void mostrarJugadoresPorRegion(eJugador jugadores[], int largo,
 	}
 }
 
-static void informarRegion(eJugador jugadores[], int largo) {
-	char region[31];
-	int idConfederacion;
-	int totalJugadores = 0;
-	int afc = 0;
-	int caf = 0;
-	int concacaf = 0;
-	int conmebol = 0;
-	int uefa = 0;
-	int ofc = 0;
+static void informarRegion(eJugador jugadores[],
+		eConfederacion confederaciones[], int largoJ, int largoC) {
+	int jugadoresPorConfederacion;
+	int mayor = 0;
+	eConfederacion auxConfederacion;
 
-	if (jugadores != NULL && largo > 0) {
-		for (int i = 0; i < largo; i++) {
-			if (jugadores[i].isEmpty == 0) {
-				totalJugadores++;
-				switch (jugadores[i].idConfederacion) {
-				case 1:
-					afc++;
-					break;
-				case 2:
-					caf++;
-					break;
-				case 3:
-					concacaf++;
-					break;
-				case 4:
-					conmebol++;
-					break;
-				case 5:
-					uefa++;
-					break;
-				case 6:
-					ofc++;
-					break;
+	if (jugadores != NULL && largoJ > 0 && confederaciones != NULL
+			&& largoC > 0) {
+		for (int i = 0; i < largoC; i++) {
+			if (confederaciones[i].isEmpty == 0) {
+				jugadoresPorConfederacion = sumarJugadoresPorConfederacion(
+						jugadores, largoJ, confederaciones[i].id);
+				if (jugadoresPorConfederacion > mayor) {
+					mayor = jugadoresPorConfederacion;
+					auxConfederacion = confederaciones[i];
 				}
 			}
 		}
-		if (afc > caf && afc > concacaf && afc > conmebol && afc > uefa
-				&& afc > ofc) {
-			idConfederacion = 1;
-		}
-		if (caf > afc && caf > concacaf && caf > conmebol && caf > uefa
-				&& caf > ofc) {
-			idConfederacion = 2;
-		}
-		if (concacaf > afc && concacaf > caf && concacaf > conmebol
-				&& concacaf > uefa && concacaf > ofc) {
-			idConfederacion = 3;
-		}
-		if (conmebol > afc && conmebol > caf && conmebol > concacaf
-				&& conmebol > uefa && conmebol > ofc) {
-			idConfederacion = 4;
-		}
-		if (uefa > afc && uefa > caf && uefa > concacaf && uefa > conmebol
-				&& uefa > ofc) {
-			idConfederacion = 5;
-		}
-		if (ofc > afc && ofc > caf && ofc > concacaf && ofc > conmebol
-				&& ofc > uefa) {
-			idConfederacion = 6;
-		}
-		obtenerRegion(region, idConfederacion);
-		printf("- La región con más jugadores es: %s, y sus jugadores son:\n", region);
-		mostrarJugadoresPorRegion(jugadores, largo, idConfederacion);
+		printf("- La región con más jugadores es: %s, y sus jugadores son:\n",
+				auxConfederacion.region);
+		mostrarJugadoresPorRegion(jugadores, largoJ, auxConfederacion.id);
 	}
 }
 
-void informarDatos(eJugador jugadores[], int largo) {
-	int hayJugadores = existenJugadores(jugadores, largo);
+void informarDatos(eJugador jugadores[], eConfederacion confederaciones[],
+		int largoJ, int largoC) {
+	int hayJugadores = existenJugadores(jugadores, largoJ);
 	int opcion;
 	int esOpcionValida;
 	int mostrarSubmenu = 1;
 
-	if (jugadores != NULL && largo > 0 && hayJugadores == 0) {
+	if (jugadores != NULL && confederaciones != NULL && largoJ > 0 && largoC > 0
+			&& hayJugadores == 0) {
 		while (mostrarSubmenu) {
 			// Pedimos al usuario que ingrese una opción:
 			esOpcionValida =
 					utn_obtenerNumero(&opcion,
-							"Seleccione una opción:\n1. Listado de jugadores alfabéticamente.\n2. Listado de confederaciones con sus jugadores.\n3. Total y promedio de todos los salarios y cuántos de los jugadores cobran más del salario promedio.\n4. Confederación con mayor cantidad de años de contrato.\n5. Porcentaje de jugadores por cada confederación.\n6. Región con más jugadores y sus integrantes.\n7. Salir.\n",
+							"Seleccione una opción:\n1. Listado de jugadores ordenados alfabéticamente por nombre de confederación.\n2. Listado de confederaciones con sus jugadores.\n3. Total y promedio de todos los salarios y cuántos de los jugadores cobran más del salario promedio.\n4. Confederación con mayor cantidad de años de contrato.\n5. Porcentaje de jugadores por cada confederación.\n6. Región con más jugadores y sus integrantes.\n7. Salir.\n",
 							"Error. Opción inválida.\n", 1, 7);
 			if (esOpcionValida == 0) {
 				switch (opcion) {
 				case 1:
-					listarJugadoresAlfabeticamente(jugadores, largo);
+					listarJugadoresAlfabeticamente(jugadores, largoJ,
+							confederaciones, largoC);
 					break;
 				case 2:
-					listarConfederacionesYSusJugadores(jugadores, largo);
+					listarConfederacionesYSusJugadores(jugadores,
+							confederaciones, largoJ, largoC);
 					break;
 				case 3:
-					informarSalarios(jugadores, largo);
+					informarSalarios(jugadores, largoJ);
 					break;
 				case 4:
-					informarMasAniosDeContrato(jugadores, largo);
+					informarMasAniosDeContrato(jugadores, confederaciones,
+							largoJ, largoC);
 					break;
 				case 5:
-					informarPorcentajePorConfederacion(jugadores, largo);
+					informarPorcentajePorConfederacion(jugadores,
+							confederaciones, largoJ, largoC);
 					break;
 				case 6:
-					informarRegion(jugadores, largo);
+					informarRegion(jugadores, confederaciones, largoJ, largoC);
 					break;
 				case 7:
 					mostrarSubmenu = 0;

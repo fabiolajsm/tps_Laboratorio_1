@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include "utn.h"
 #include "jugadores.h"
+#include "confederaciones.h"
 #include "informes.h"
-#define CANTIDAD_JUGADORES 10
+#define CANTIDAD_JUGADORES 3000
+#define CANTIDAD_CONFEDERACIONES 6
 
 int main(void) {
 	int mostrarMenu = 1;
@@ -12,7 +14,9 @@ int main(void) {
 	int confirmacion;
 
 	eJugador jugadores[CANTIDAD_JUGADORES];
-	inicializarJugadores(jugadores, CANTIDAD_JUGADORES); // Tiene que ser hasta 3000 jugadores y hay 6 confederaciones
+	eConfederacion confederaciones[CANTIDAD_CONFEDERACIONES];
+	inicializarJugadores(jugadores, CANTIDAD_JUGADORES);
+	inicializarConfederaciones(confederaciones, CANTIDAD_CONFEDERACIONES);
 
 	while (mostrarMenu) {
 		// Pedimos al usuario que ingrese una opción:
@@ -26,13 +30,16 @@ int main(void) {
 				darAltaJugador(jugadores, CANTIDAD_JUGADORES);
 				break;
 			case 2:
-				darBajaJugador(jugadores, CANTIDAD_JUGADORES);
+				darBajaJugador(jugadores, CANTIDAD_JUGADORES, confederaciones,
+				CANTIDAD_CONFEDERACIONES);
 				break;
 			case 3:
-				modificarJugador(jugadores, CANTIDAD_JUGADORES);
+				modificarJugador(jugadores, CANTIDAD_JUGADORES, confederaciones,
+				CANTIDAD_CONFEDERACIONES);
 				break;
 			case 4:
-				informarDatos(jugadores, CANTIDAD_JUGADORES);
+				informarDatos(jugadores, confederaciones, CANTIDAD_JUGADORES,
+				CANTIDAD_CONFEDERACIONES);
 				break;
 			case 5:
 				if (utn_obtenerNumero(&confirmacion,

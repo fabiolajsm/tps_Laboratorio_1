@@ -7,6 +7,7 @@
 
 #ifndef JUGADORES_H_
 #define JUGADORES_H_
+#include "confederaciones.h"
 #define LARGO 50
 
 typedef struct {
@@ -19,6 +20,12 @@ typedef struct {
 	short aniosContrato;
 	short isEmpty;
 } eJugador;
+
+typedef struct {
+	int idConfederacion;
+	char nombre[LARGO];
+	int aniosContrato;
+} eAniosContrato;
 
 /**
  * @fn void inicializarJugadores(eJugador[], int)
@@ -40,18 +47,24 @@ void darAltaJugador(eJugador jugadores[], int largo);
  * @fn void darBajaJugador(eJugador[], int)
  * @brief Esta función pide el ID de un jugador y si lo encuentra lo da de baja.
  * @param jugadores Variable que contiene los jugadores.
- * @param largo Largo de la variable jugadores.
+ * @param largoJ Largo de la variable jugadores.
+ * @param confederaciones Variable que contiene las confederaciones existenten.
+ * @param largoC Largo de la variable confederaciones.
  * @return void
  * */
-void darBajaJugador(eJugador jugadores[], int largo);
+void darBajaJugador(eJugador jugadores[], int largoJ,
+		eConfederacion confederaciones[], int largoC);
 /**
  * @fn void modificarJugador(eJugador[], int)
  * @brief Esta función lista todos los jugadores y pide el ID de un jugador, si lo encuentra muestra un submenu que permite modificar todos sus datos.
  * @param jugadores Variable que contiene los jugadores.
- * @param largo Largo de la variable jugadores.
+ * @param largoJ Largo de la variable jugadores.
+ * @param confederaciones Variable que contiene las confederaciones existenten.
+ * @param largoC Largo de la variable confederaciones.
  * @return void
  * */
-void modificarJugador(eJugador jugadores[], int largo);
+void modificarJugador(eJugador jugadores[], int largoJ,
+		eConfederacion confederaciones[], int largoC);
 /**
  * @fn int existenJugadores(eJugador[], int)
  * @brief Esta función verifica que existan jugadores cargados.
@@ -64,9 +77,12 @@ int existenJugadores(eJugador jugadores[], int largo);
  * @fn void mostrarJugadores(eJugador[], int)
  * @brief Esta función imprime por consola la variable jugadores mostrándolos en una tabla.
  * @param jugadores Variable que contiene los jugadores.
- * @param largo Largo de la variable jugadores.
+ * @param largoJ Largo de la variable jugadores.
+ * @param confederaciones Variable que contiene las confederaciones existenten.
+ * @param largoC Largo de la variable confederaciones.
  * @return void.
  * */
-void mostrarJugadores(eJugador jugadores[], int largo);
+void mostrarJugadores(eJugador jugadores[], int largoJ,
+		eConfederacion confederaciones[], int largoC);
 
 #endif /* JUGADORES_H_ */

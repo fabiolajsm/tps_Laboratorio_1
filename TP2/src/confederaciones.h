@@ -16,7 +16,8 @@ typedef struct {
 	int anioCreacion;
 	int isEmpty;
 } eConfederacion;
-
+// documentar
+void inicializarConfederaciones(eConfederacion confederaciones[], int largo);
 void darAltaConfederacion(eConfederacion confederaciones[], int largo);
 void darBajaConfederacion(eConfederacion confederaciones[], int largo);
 void modificarConfederacion(eConfederacion confederaciones[], int largo);

@@ -8,16 +8,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include "utn.h"
+#include "jugadores.h"
 #include "confederaciones.h"
 #define ERROR_TEXTO "Error. Tiene que ingresar un texto alfabético que no tenga más de 50 caracteres\n"
 #define ID_NO_ENCONTRADO "Error. El ID no fue encontrado.\n"
 #define MODIFICACION_EXITOSA "Se modificó exitosamente.\n"
 
 void inicializarConfederaciones(eConfederacion confederaciones[], int largo) {
+	int ids[6] = { 100, 101, 102, 103, 104, 105 };
+	char nombres[6][50] =
+			{ "CONMEBOL", "UEFA", "AFC", "CAF", "CONCACAF", "OFC" };
+	char regiones[6][50] = { "SUDAMERICA", "EUROPA", "ASIA", "AFRICA",
+			"NORTE Y CENTRO AMERICA", "OCEANIA" };
+	int aniosDeCreacion[6] = { 1916, 1954, 1954, 1957, 1961, 1966 };
+
 	if (confederaciones != NULL && largo > 0) {
 		for (int i = 0; i < largo; i++) {
-			// True 1 para "esta vacio" y false 0 para "no está vacío"
-			confederaciones[i].isEmpty = 1;
+			confederaciones[i].isEmpty = 0;
+			confederaciones[i].id = ids[i];
+			strcpy(confederaciones[i].nombre, nombres[i]);
+			strcpy(confederaciones[i].region, regiones[i]);
+			confederaciones[i].anioCreacion = aniosDeCreacion[i];
 		}
 	}
 }

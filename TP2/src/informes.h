@@ -15,6 +15,7 @@
  * @param largo Largo de la variable jugadores.
  * @return void
  * */
-void informarDatos(eJugador jugadores[], int largo);
+void informarDatos(eJugador jugadores[], eConfederacion confederaciones[],
+		int largoJ, int largoC);
 
 #endif /* INFORMES_H_ */

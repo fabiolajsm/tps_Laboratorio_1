@@ -1,6 +1,30 @@
-22:07:47 **** Incremental Build of configuration Debug for project TP_3 ****
+12:35:51 **** Incremental Build of configuration Debug for project TP_2 ****
 make all 
-make: No se hace nada para 'all'.
-22:07:59 **** Incremental Build of configuration Debug for project TP_3 ****
+Building file: ../src/TP2.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/TP2.d" -MT"src/TP2.o" -o "src/TP2.o" "../src/TP2.c"
+Finished building: ../src/TP2.c
+ 
+Building file: ../src/confederaciones.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/confederaciones.d" -MT"src/confederaciones.o" -o "src/confederaciones.o" "../src/confederaciones.c"
+Finished building: ../src/confederaciones.c
+ 
+Building file: ../src/informes.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/informes.d" -MT"src/informes.o" -o "src/informes.o" "../src/informes.c"
+Finished building: ../src/informes.c
+ 
+Building file: ../src/jugadores.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/jugadores.d" -MT"src/jugadores.o" -o "src/jugadores.o" "../src/jugadores.c"
+Finished building: ../src/jugadores.c
+ 
+Building target: TP_2
+Invoking: GCC C Linker
+gcc  -o "TP_2"  ./src/TP2.o ./src/confederaciones.o ./src/informes.o ./src/jugadores.o ./src/utn.o   
+Finished building target: TP_2
+ 
+12:35:54 **** Incremental Build of configuration Debug for project TP_2 ****
 make all 
 make: No se hace nada para 'all'.

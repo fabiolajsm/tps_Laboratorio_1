@@ -94,25 +94,18 @@ int utn_obtenerNumeroShort(short *pResultado, char *mensaje, char *mensajeError,
 }
 
 static int esTexto(char *cadena) {
-	int i = 0;
-	int retorno = 1;
+	if (cadena == NULL || strlen(cadena) < 1)
+		return 0;
 
-	if (cadena != NULL && strlen(cadena) > 0) {
-		for (i = 0; cadena[i] != '\0' && i < sizeof(cadena); i++) {
-			if ((cadena[i] < 'A' || cadena[i] > 'Z')
-					&& (cadena[i] < 'a' || cadena[i] > 'z')) {
-				// Acá no es texto
-				if (cadena[i] == ' ' || cadena[i] == '\t'
-						|| cadena[i] == '\v') {
-					retorno = 1;
-				} else {
-					retorno = 0;
-				}
-				break;
-			}
+	for (int i = 0; cadena[i] != '\0'; i++) {
+		if ((cadena[i] < 'A' || cadena[i] > 'Z')
+				&& (cadena[i] < 'a' || cadena[i] > 'z') && cadena[i] != ' ') {
+			// Acá no es texto
+			return 0;
 		}
 	}
-	return retorno;
+
+	return 1;
 }
 
 static int obtenerString(char *pResultado, int longitud) {
@@ -160,18 +153,19 @@ static int esFlotante(char cadena[]) {
 	int i = 0;
 	int cantidadPuntos = 0;
 
-	if (cadena != NULL && strlen(cadena) > 0) {
-		while (cadena[i] != '\0') {
-			if (cadena[i] < '0' || cadena[i] > '9') {
-				if (cadena[i] == '.' && cantidadPuntos == 0) {
-					retorno = 1;
-					cantidadPuntos++;
-				} else {
-					retorno = 0;
-				}
+	if (cadena == NULL || strlen(cadena) < 1)
+		return 0;
+
+	while (cadena[i] != '\0') {
+		if (cadena[i] == '.' && cantidadPuntos < 1) {
+			cantidadPuntos++;
+		} else {
+			if (cadena[i] < '0' || cadena[i] > '9' || cantidadPuntos > 1) {
+				retorno = 0;
+				break;
 			}
-			i++;
 		}
+		i++;
 	}
 	return retorno;
 }
