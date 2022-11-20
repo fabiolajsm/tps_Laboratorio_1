@@ -36,7 +36,7 @@ typedef struct {
  * */
 void inicializarJugadores(eJugador jugadores[], int largo);
 /**
- * @fn void darAltaJugador(eArticulo[], int)
+ * @fn void darAltaJugador(eJugador[], int)
  * @brief Esta función da de alta a un jugador.
  * @param jugadores Dirección de memoria de la variable en donde se va a guardar cada jugador.
  * @param largo Largo de la variable jugadores.
@@ -48,7 +48,7 @@ void darAltaJugador(eJugador jugadores[], int largo);
  * @brief Esta función pide el ID de un jugador y si lo encuentra lo da de baja.
  * @param jugadores Variable que contiene los jugadores.
  * @param largoJ Largo de la variable jugadores.
- * @param confederaciones Variable que contiene las confederaciones existenten.
+ * @param confederaciones Variable que contiene las confederaciones existentes.
  * @param largoC Largo de la variable confederaciones.
  * @return void
  * */
@@ -59,7 +59,7 @@ void darBajaJugador(eJugador jugadores[], int largoJ,
  * @brief Esta función lista todos los jugadores y pide el ID de un jugador, si lo encuentra muestra un submenu que permite modificar todos sus datos.
  * @param jugadores Variable que contiene los jugadores.
  * @param largoJ Largo de la variable jugadores.
- * @param confederaciones Variable que contiene las confederaciones existenten.
+ * @param confederaciones Variable que contiene las confederaciones existentes.
  * @param largoC Largo de la variable confederaciones.
  * @return void
  * */
@@ -78,7 +78,7 @@ int existenJugadores(eJugador jugadores[], int largo);
  * @brief Esta función imprime por consola la variable jugadores mostrándolos en una tabla.
  * @param jugadores Variable que contiene los jugadores.
  * @param largoJ Largo de la variable jugadores.
- * @param confederaciones Variable que contiene las confederaciones existenten.
+ * @param confederaciones Variable que contiene las confederaciones existentes.
  * @param largoC Largo de la variable confederaciones.
  * @return void.
  * */
