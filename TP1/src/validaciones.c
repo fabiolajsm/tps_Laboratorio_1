@@ -1,17 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAXIMO_DE_JUGADORES 22
-#define MAXIMO_ARQUEROS 2
-#define MAXIMO_DEFENSORES 8
-#define MAXIMO_MEDIOCAMPISTAS 8
-#define MAXIMO_DELANTEROS 4
-
-int numerosCargados[MAXIMO_DE_JUGADORES] = { };
-int arqueros = 0;
-int defensores = 0;
-int mediocampistas = 0;
-int delanteros = 0;
 
 static int esNumero(char cadena[]) {
 	int i = 0;
@@ -58,95 +47,12 @@ int obtenerNumero(int *pResultado, char *mensaje, char *mensajeError,
 				}
 			}
 			intentos--;
-			printf("%s", mensajeError);
-		}
-	}
-	return ret;
-}
-
-int camisetaDisponible(int num, char *mensajeExito, char *mensajeError) {
-	int ret = 0;
-	if (mensajeExito != NULL && mensajeError != NULL && num > 0) {
-		for (int i = 0; i < MAXIMO_DE_JUGADORES; i++) {
-			if (numerosCargados[num - 1] != num) {
-				ret = 1;
-				numerosCargados[num - 1] = num;
-				printf("%s", mensajeExito);
-				break;
+			if (intentos < 1) {
+				printf("Error. Intentos acabados, intente mas tarde.\n");
 			} else {
 				printf("%s", mensajeError);
-				break;
 			}
 		}
 	}
 	return ret;
-}
-
-int posicionDisponible(int num, char *mensajeExito, char *mensajeError) {
-	int ret = 0;
-	if (mensajeExito != NULL && mensajeError != NULL && num > 0) {
-		switch (num) {
-		case 1:
-			if (arqueros < MAXIMO_ARQUEROS) {
-				ret = 1;
-				arqueros++;
-			}
-			break;
-		case 2:
-			if (defensores < MAXIMO_DEFENSORES) {
-				ret = 1;
-				defensores++;
-			}
-			break;
-		case 3:
-			if (mediocampistas < MAXIMO_MEDIOCAMPISTAS) {
-				ret = 1;
-				mediocampistas++;
-			}
-			break;
-		case 4:
-			if (delanteros < MAXIMO_DELANTEROS) {
-				ret = 1;
-				delanteros++;
-			}
-			break;
-		}
-	}
-
-	if (ret == 1) {
-		printf("%s", mensajeExito);
-	} else {
-		printf("%s", mensajeError);
-	}
-	return ret;
-}
-
-float divisionDecimales(float numA, float numB) {
-	if (numB == 0) {
-		return -1;
-	}
-	return numA / numB;
-}
-
-int sePuedeCalcular(int costos, int jugadoresIngresados) {
-	int ret = 0;
-	if (costos < 1 && jugadoresIngresados < 1) {
-		printf(
-				"Error. No hay costos de mantenimiento ni jugadores ingresados. Intente yendo a la opción 1 y a la 2.\n");
-	} else if (costos < 1) {
-		printf(
-				"Error. No hay costos de mantenimiento ingresados. Intente yendo a la opción 1.\n");
-	} else if (jugadoresIngresados < 1) {
-		printf(
-				"Error. No hay jugadores ingresados. Intente yendo a la opción 2.\n");
-	} else {
-		ret = 1;
-	}
-	return ret;
-}
-
-void mostrarCantidadJugadores(void) {
-	printf(
-			"→ Arqueros: %d\n→ Defensores: %d\n→ Mediocampistas: %d\n→ Delanteros: %d\n",
-			arqueros, defensores, mediocampistas, delanteros);
 }

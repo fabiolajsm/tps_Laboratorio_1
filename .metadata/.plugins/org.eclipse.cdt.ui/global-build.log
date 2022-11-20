@@ -1,30 +1,15 @@
-12:35:51 **** Incremental Build of configuration Debug for project TP_2 ****
+10:46:45 **** Incremental Build of configuration Debug for project TP_1 ****
 make all 
-Building file: ../src/TP2.c
+Building file: ../src/operaciones.c
 Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/TP2.d" -MT"src/TP2.o" -o "src/TP2.o" "../src/TP2.c"
-Finished building: ../src/TP2.c
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/operaciones.d" -MT"src/operaciones.o" -o "src/operaciones.o" "../src/operaciones.c"
+Finished building: ../src/operaciones.c
  
-Building file: ../src/confederaciones.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/confederaciones.d" -MT"src/confederaciones.o" -o "src/confederaciones.o" "../src/confederaciones.c"
-Finished building: ../src/confederaciones.c
- 
-Building file: ../src/informes.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/informes.d" -MT"src/informes.o" -o "src/informes.o" "../src/informes.c"
-Finished building: ../src/informes.c
- 
-Building file: ../src/jugadores.c
-Invoking: GCC C Compiler
-gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/jugadores.d" -MT"src/jugadores.o" -o "src/jugadores.o" "../src/jugadores.c"
-Finished building: ../src/jugadores.c
- 
-Building target: TP_2
+Building target: TP_1
 Invoking: GCC C Linker
-gcc  -o "TP_2"  ./src/TP2.o ./src/confederaciones.o ./src/informes.o ./src/jugadores.o ./src/utn.o   
-Finished building target: TP_2
+gcc  -o "TP_1"  ./src/TP1.o ./src/operaciones.o ./src/validaciones.o   
+Finished building target: TP_1
  
-12:35:54 **** Incremental Build of configuration Debug for project TP_2 ****
+10:46:54 **** Incremental Build of configuration Debug for project TP_1 ****
 make all 
 make: No se hace nada para 'all'.
