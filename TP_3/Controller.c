@@ -269,70 +269,139 @@ static int controller_generarIDJugador(void) {
 }
 
 // --- Jugadores y selecciones ---
-/** \brief Alta de jugadores
- *
- * \param pArrayListJugador LinkedList*
- * \return int
- *
- */
 static int asignarPosicion(char *pPosicion, int opcion) {
 	int retorno = -1;
 	if (pPosicion != NULL && opcion > 0) {
 		switch (opcion) {
 		case 1:
-			strcpy(pPosicion, "Arqueros");
+			strcpy(pPosicion, "Portero");
 			break;
 		case 2:
-			strcpy(pPosicion, "Defensa");
+			strcpy(pPosicion, "Defensa central");
 			break;
 		case 3:
-			strcpy(pPosicion, "Mediocampo");
+			strcpy(pPosicion, "Lateral izquierdo");
 			break;
 		case 4:
-			strcpy(pPosicion, "Delantero");
+			strcpy(pPosicion, "Lateral derecho");
+			break;
+		case 5:
+			strcpy(pPosicion, "Pivote");
+			break;
+		case 6:
+			strcpy(pPosicion, "Mediocentro");
+			break;
+		case 7:
+			strcpy(pPosicion, "Mediocentro ofensivo");
+			break;
+		case 8:
+			strcpy(pPosicion, "Extremo izquierdo");
+			break;
+		case 9:
+			strcpy(pPosicion, "Extremo derecho");
+			break;
+		case 10:
+			strcpy(pPosicion, "Mediapunta");
+			break;
+		case 11:
+			strcpy(pPosicion, "Delantero centro");
+			break;
+		case 12:
+			strcpy(pPosicion, "Interior derecho");
+			break;
+		default:
+			retorno = -1;
 			break;
 		}
 		retorno = 0;
 	}
 	return retorno;
 }
-
+static int asignarNacionalidad(char *pNacionalidad, int opcion) {
+	int retorno = -1;
+	if (pNacionalidad != NULL && opcion > 0) {
+		switch (opcion) {
+		case 1:
+			strcpy(pNacionalidad, "Argentino");
+			break;
+		case 2:
+			strcpy(pNacionalidad, "Brasilero");
+			break;
+		case 3:
+			strcpy(pNacionalidad, "Uruguayo");
+			break;
+		case 4:
+			strcpy(pNacionalidad, "Portugues");
+			break;
+		case 5:
+			strcpy(pNacionalidad, "Ingles");
+			break;
+		case 6:
+			strcpy(pNacionalidad, "Aleman");
+			break;
+		case 7:
+			strcpy(pNacionalidad, "Mexicano");
+			break;
+		case 8:
+			strcpy(pNacionalidad, "Estado Unidense");
+			break;
+		case 9:
+			strcpy(pNacionalidad, "Camerunes");
+			break;
+		case 10:
+			strcpy(pNacionalidad, "Senegales");
+			break;
+		case 11:
+			strcpy(pNacionalidad, "Australiano");
+			break;
+		case 12:
+			strcpy(pNacionalidad, "Qatari");
+			break;
+		default:
+			retorno = -1;
+			break;
+		}
+		retorno = 0;
+	}
+	return retorno;
+}
+/** \brief Alta de jugadores
+ *
+ * \param pArrayListJugador LinkedList*
+ * \return int
+ *
+ */
 int controller_agregarJugador(LinkedList *pArrayListJugador) {
 	int retorno = -1;
 	Jugador *auxPunteroJugador = jug_new();
-	char nombreCompleto[30];
-	char apellido[30];
+	char nombreCompleto[100];
 	int edad;
 	char posicion[30];
 	int posicionElegida;
 	char nacionalidad[30];
+	int nacionalidadElegida;
 	int id;
 
 	if (pArrayListJugador != NULL) {
 		if (utn_obtenerTexto(nombreCompleto, 100,
-				"Ingrese nombre del jugador:\n",
+				"Ingrese nombre completo del jugador:\n",
 				"Error. El nombre no puede estar vacío o tener más de 100 caracteres y tiene que ser alfabético.\n",
 				100) == 0
-				&& utn_obtenerTexto(apellido, 100,
-						"Ingrese apellido del jugador:\n",
-						"Error. El apellido no puede estar vacío o tener más de 100 caracteres y tiene que ser alfabético.\n",
-						100) == 0
 				&& utn_obtenerNumero(&edad, "Ingrese edad del jugador:\n",
 						"Error. La edad tiene que ser un numero entero, mayor a 10 y menor a 70.\n",
 						10, 70) == 0
 				&& utn_obtenerNumero(&posicionElegida,
-						"Ingrese que posición quiere jugar:\n1. Arquero.\n2. Defensa.\n3. Mediocampo.\n4. Delantero.\n",
-						"Error. Tienes que seleccionar el número de la posición a jugar (opciones del 1 al 4).\n",
-						1, 4) == 0
-				&& utn_obtenerTexto(nacionalidad, 30,
-						"Ingrese nacionalidad del jugador:\n",
-						"Error. La nacionalidad tener más de 30 caracteres y tiene que ser alfabético.\n",
-						30) == 0) {
+						"Ingrese que posición quiere jugar:\n1. Portero.\n2. Defensa central.\n3. Lateral izquierdo.\n4. Lateral derecho.\n5. Pivote.\n6. Mediocentro.\n7. Mediocentro ofensivo.\n8. Extremo izquierdo.\n9. Extremo derecho.\n10. Mediapunta.\n11. Delantero centro.\n12. Interior derecho.\n",
+						"Error. Tienes que seleccionar el número de la posición a jugar (opciones del 1 al 12).\n",
+						1, 12) == 0
+				&& utn_obtenerNumero(&nacionalidadElegida,
+						"Ingrese nacionalidad del jugador:\n1. Argentino.\n2. Brasilero.\n3. Uruguayo.\n4. Portugues.\n5. Ingles.\n6. Aleman.\n7. Mexicano.\n8. Estado Unidense.\n9. Camerunes.\n10. Senegales.\n11. Australiano.\n12. Qatari.\n",
+						"Error. Tienes que seleccionar el número de la nacionalidad correspondiente (opciones del 1 al 12).\n",
+						1, 30) == 0) {
 			id = controller_generarIDJugador();
-			if (id > 370 && asignarPosicion(posicion, posicionElegida) == 0) {
-				strcat(nombreCompleto, " ");
-				strcat(nombreCompleto, apellido);
-
+			if (id > 370 && asignarPosicion(posicion, posicionElegida) == 0
+					&& asignarNacionalidad(nacionalidad, nacionalidadElegida)
+							== 0) {
 				if (jug_setId(auxPunteroJugador, id) == 1
 						&& jug_setNombreCompleto(auxPunteroJugador,
 								nombreCompleto) == 1
