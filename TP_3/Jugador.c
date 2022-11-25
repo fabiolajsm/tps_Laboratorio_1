@@ -159,11 +159,12 @@ int jug_compararNacionalidad(void *a, void *b) {
 	Jugador *pAuxiliarB = (Jugador*) b;
 
 	if (a != NULL && b != NULL) {
-
 		if (jug_getNacionalidad(pAuxiliarA, nacionalidadA)
 				&& jug_getNacionalidad(pAuxiliarB, nacionalidadB)) {
 			if (strncmp(nacionalidadA, nacionalidadB, 30) > 0) {
 				retorno = 1;
+			} else {
+				retorno = 0;
 			}
 		}
 	}
@@ -188,6 +189,8 @@ int jug_compararEdad(void *a, void *b) {
 				&& jug_getEdad(pAuxiliarB, &edadB)) {
 			if (edadA > edadB) {
 				retorno = 1;
+			} else {
+				retorno = 0;
 			}
 		}
 	}
@@ -213,6 +216,8 @@ int jug_compararNombres(void *a, void *b) {
 				&& jug_getNacionalidad(pAuxiliarB, nombreB)) {
 			if (strncmp(nombreA, nombreB, 30) > 0) {
 				retorno = 1;
+			} else {
+				retorno = 0;
 			}
 		}
 	}

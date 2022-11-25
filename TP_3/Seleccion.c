@@ -103,6 +103,8 @@ int selec_compararConfederaciones(void *a, void *b) {
 				&& selec_getConfederacion(pAuxiliarB, confederacionB)) {
 			if (strncmp(confederacionA, confederacionB, 30) > 0) {
 				retorno = 1;
+			} else {
+				retorno = 0;
 			}
 		}
 	}
