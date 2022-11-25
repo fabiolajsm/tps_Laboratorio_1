@@ -85,7 +85,8 @@ int main() {
 			case 5:
 				if (ll_isEmpty(listaJugadores) == 0
 						&& ll_isEmpty(listaSelecciones) == 0) {
-					controller_listados(listaJugadores, listaSelecciones);
+					controller_listados(listaJugadores, listaSelecciones,
+							listaJugadoresConvocados);
 				} else {
 					printf(ERROR_NO_HAY_CARGA);
 				}
@@ -94,7 +95,7 @@ int main() {
 				if (ll_isEmpty(listaJugadores) == 0
 						&& ll_isEmpty(listaSelecciones) == 0) {
 					if (controller_convocarJugadores(listaJugadores,
-							listaSelecciones) == 0) {
+							listaSelecciones, listaJugadoresConvocados) == 0) {
 						hayCambios = 1;
 					}
 				} else {

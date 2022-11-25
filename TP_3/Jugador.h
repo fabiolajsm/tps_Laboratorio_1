@@ -41,8 +41,7 @@ int jug_compararNacionalidad(void *a, void *b);
 // Listados
 void controller_listarJugador(Jugador *item);
 int controller_listarJugadores(LinkedList *pArrayListJugador);
-int controller_listarJugadoresConvocados(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion);
+int controller_listarJugadoresConvocados(LinkedList *pArrayListConvocados);
 
 // Comparaciones
 int jug_compararNacionalidad(void *a, void *b);

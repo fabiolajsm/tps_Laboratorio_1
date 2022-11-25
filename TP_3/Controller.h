@@ -25,12 +25,12 @@ int controller_removerJugador(LinkedList *pArrayListJugador,
 int controller_obtenerIndexSeleccionPorId(LinkedList *pArrayListSeleccion,
 		int idSeleccion);
 int controller_convocarJugadores(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion);
+		LinkedList *pArrayListSeleccion, LinkedList *pArrayListConvocados);
 int controller_editarSeleccion(LinkedList *pArrayListSeleccion);
 
 // Ordenados y listados
 void controller_listados(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion);
+		LinkedList *pArrayListSeleccion, LinkedList *pArrayListConvocados);
 int controller_ordenarJugadores(LinkedList *pArrayListJugador);
 int controller_ordenarSelecciones(LinkedList *pArrayListSeleccion);
 int controller_ordenarYListar(LinkedList *pArrayListJugador,

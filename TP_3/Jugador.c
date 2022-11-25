@@ -267,40 +267,29 @@ int controller_listarJugadores(LinkedList *pArrayListJugador) {
  * \return int
  *
  */
-int controller_listarJugadoresConvocados(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion) {
+int controller_listarJugadoresConvocados(LinkedList *pArrayListConvocados) {
 	int retorno = -1;
-	int largo = ll_len(pArrayListJugador);
-	Jugador *auxPunteroJugador = NULL;
-	int idSeleccion;
-	int noHayJugadoresConvocados = 1;
+	int largo = ll_len(pArrayListConvocados);
 
-	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL && largo > 0) {
-		printf("\t\t\t\t\t- Jugadores convocados -\n");
-		printf(
-				"==================================================================================================================\n");
-		printf("|%*s|%*s|%*s|%*s|%*s|%s|\n", -5, " ID", -30, " NOMBRE", -7,
-				" EDAD", -27, " POSICIÓN", -20, " NACIONALIDAD",
-				" SELECCIÓN          ");
-		printf(
-				"------------------------------------------------------------------------------------------------------------------\n");
-		for (int i = 0; i < largo; i++) {
-			auxPunteroJugador = (Jugador*) ll_get(pArrayListJugador, i);
-			if (auxPunteroJugador != NULL
-					&& jug_getIdSeleccion(auxPunteroJugador, &idSeleccion)
-							== 1) {
-				if (controller_obtenerIndexSeleccionPorId(pArrayListSeleccion,
-						idSeleccion) != -1) {
-					noHayJugadoresConvocados = 0;
-					controller_listarJugador(auxPunteroJugador);
-				}
+	if (pArrayListConvocados != NULL) {
+		if (ll_isEmpty(pArrayListConvocados) == 1) {
+			printf("No hay jugadores convocados\n");
+		} else {
+			printf("\t\t\t\t\t- Jugadores convocados -\n");
+			printf(
+					"==================================================================================================================\n");
+			printf("|%*s|%*s|%*s|%*s|%*s|%s|\n", -5, " ID", -30, " NOMBRE", -7,
+					" EDAD", -27, " POSICIÓN", -20, " NACIONALIDAD",
+					" SELECCIÓN          ");
+			printf(
+					"------------------------------------------------------------------------------------------------------------------\n");
+			for (int i = 0; i < largo; i++) {
+				controller_listarJugador(
+						(Jugador*) ll_get(pArrayListConvocados, i));
 			}
+			printf(
+					"==================================================================================================================\n");
 		}
-		if (noHayJugadoresConvocados == 1) {
-			printf("| No hay jugadores convocados\n");
-		}
-		printf(
-				"==================================================================================================================\n");
 		retorno = 0;
 	}
 

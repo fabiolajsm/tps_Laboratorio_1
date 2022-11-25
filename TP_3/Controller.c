@@ -680,7 +680,7 @@ int controller_obtenerIndexSeleccionPorId(LinkedList *pArrayListSeleccion,
  *
  */
 static int controller_convocarJugador(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion) {
+		LinkedList *pArrayListSeleccion, LinkedList *pArrayListConvocados) {
 	int retorno = -1;
 	int idJugador;
 	int indexJugador;
@@ -691,11 +691,13 @@ static int controller_convocarJugador(LinkedList *pArrayListJugador,
 	int indexSeleccion;
 	int convocados;
 
-	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL) {
-		if (utn_obtenerNumero(&idJugador,
-				"Ingrese el ID del jugador que quiere convocar:\n",
-				"Error. El ID tiene que ser un numero entero, mayor 0 y menor a 9000.\n",
-				1, 9000) == 0) {
+	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL
+			&& pArrayListConvocados != NULL) {
+		if (controller_listarJugadores(pArrayListJugador) == 0
+				&& utn_obtenerNumero(&idJugador,
+						"Ingrese el ID del jugador que quiere convocar:\n",
+						"Error. El ID tiene que ser un numero entero, mayor 0 y menor a 9000.\n",
+						1, 9000) == 0) {
 			indexJugador = controller_obtenerIndexPorId(pArrayListJugador,
 					idJugador);
 			pJugadorAConvocar = ll_get(pArrayListJugador, indexJugador);
@@ -707,10 +709,12 @@ static int controller_convocarJugador(LinkedList *pArrayListJugador,
 						printf(
 								"Error. El jugador ya fue convocado por una selección\n");
 					} else {
-						if (utn_obtenerNumero(&idSeleccionIngresada,
-								"Ingrese el ID de la seleccion a donde quiere convocar:\n",
-								"Error. El ID tiene que ser un numero entero, mayor a 0 y menor a 33.\n",
-								1, 32) == 0) {
+						if (controller_listarSelecciones(pArrayListSeleccion)
+								== 0
+								&& utn_obtenerNumero(&idSeleccionIngresada,
+										"Ingrese el ID de la seleccion a donde quiere convocar:\n",
+										"Error. El ID tiene que ser un numero entero, mayor a 0 y menor a 33.\n",
+										1, 32) == 0) {
 							indexSeleccion =
 									controller_obtenerIndexSeleccionPorId(
 											pArrayListSeleccion,
@@ -728,7 +732,10 @@ static int controller_convocarJugador(LinkedList *pArrayListJugador,
 											&& selec_setConvocados(
 													pSeleccionElegida,
 													convocados)) {
-										retorno = 0;
+										if (ll_add(pArrayListConvocados,
+												pJugadorAConvocar) == 0) {
+											retorno = 0;
+										}
 									}
 								} else {
 									printf(
@@ -748,30 +755,6 @@ static int controller_convocarJugador(LinkedList *pArrayListJugador,
 
 	return retorno;
 }
-/** \brief Revisa si existen jugadores convocados
- *
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
-static int controller_hayConvocados(LinkedList *pArrayListSeleccion) {
-	int retorno = 0;
-	int convocados;
-	Seleccion *auxPunteroSeleccion = NULL;
-
-	if (pArrayListSeleccion != NULL) {
-		for (int i = 0; i < ll_len(pArrayListSeleccion); i++) {
-			auxPunteroSeleccion = (Seleccion*) ll_get(pArrayListSeleccion, i);
-			if (selec_getConvocados(auxPunteroSeleccion, &convocados) == 1
-					&& convocados > 0) {
-				retorno = 1;
-				break;
-			}
-		}
-	}
-
-	return retorno;
-}
 /** \brief Quita a un jugador seleccionado de la seleccion que tenía asignado
  *
  * \param pArrayListJugador LinkedList*
@@ -780,7 +763,7 @@ static int controller_hayConvocados(LinkedList *pArrayListSeleccion) {
  *
  */
 static int controller_quitarJugadorSeleccion(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion) {
+		LinkedList *pArrayListSeleccion, LinkedList *pArrayListConvocados) {
 	int retorno = -1;
 	int idJugador;
 	int indexJugador;
@@ -791,16 +774,19 @@ static int controller_quitarJugadorSeleccion(LinkedList *pArrayListJugador,
 	int convocados;
 
 	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL
-			&& controller_hayConvocados(pArrayListSeleccion) == 1) {
-		if (controller_listarJugadoresConvocados(pArrayListJugador,
-				pArrayListSeleccion) == 0
+			&& pArrayListConvocados != NULL
+			&& ll_isEmpty(pArrayListConvocados) == 0) {
+
+		if (controller_listarJugadoresConvocados(pArrayListConvocados) == 0
 				&& utn_obtenerNumero(&idJugador,
 						"Ingrese el ID del jugador que quiere quitar de la seleccion:\n",
 						"Error. El ID tiene que ser un numero entero, mayor 0.\n",
 						1, 9000) == 0) {
+
 			indexJugador = controller_obtenerIndexPorId(pArrayListJugador,
 					idJugador);
 			pJugador = ll_get(pArrayListJugador, indexJugador);
+
 			if (pJugador != NULL
 					&& jug_getIdSeleccion(pJugador, &idSeleccionJugador)) {
 				if (idSeleccionJugador == 0) {
@@ -813,7 +799,10 @@ static int controller_quitarJugadorSeleccion(LinkedList *pArrayListJugador,
 							&& selec_getConvocados(pSeleccion, &convocados)) {
 						if (convocados > 0) {
 							convocados--;
-							if (selec_setConvocados(pSeleccion, convocados)) {
+							if (selec_setConvocados(pSeleccion, convocados)
+									&& jug_setIdSeleccion(pJugador, 0)
+									&& ll_remove(pArrayListConvocados,
+											indexJugador) == 0) {
 								retorno = 0;
 							}
 						}
@@ -837,13 +826,14 @@ static int controller_quitarJugadorSeleccion(LinkedList *pArrayListJugador,
  * \return void
  */
 int controller_convocarJugadores(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion) {
+		LinkedList *pArrayListSeleccion, LinkedList *pArrayListConvocados) {
 	int retorno = -1;
 	int mostrarSubmenu = 1;
 	int esOpcionValida;
 	int opcion;
 
-	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL) {
+	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL
+			&& pArrayListConvocados != NULL) {
 		while (mostrarSubmenu == 1) {
 			esOpcionValida =
 					utn_obtenerNumero(&opcion,
@@ -854,13 +844,13 @@ int controller_convocarJugadores(LinkedList *pArrayListJugador,
 				switch (opcion) {
 				case 1:
 					if (controller_convocarJugador(pArrayListJugador,
-							pArrayListSeleccion) == 0) {
+							pArrayListSeleccion, pArrayListConvocados) == 0) {
 						printf("Jugador convocado exitosamente\n");
 					}
 					break;
 				case 2:
 					if (controller_quitarJugadorSeleccion(pArrayListJugador,
-							pArrayListSeleccion) == 0) {
+							pArrayListSeleccion, pArrayListConvocados) == 0) {
 						printf(
 								"Jugador quitado de la selección exitosamente\n");
 					}
@@ -895,30 +885,37 @@ int controller_editarSeleccion(LinkedList *pArrayListSeleccion) {
  * \return void
  */
 void controller_listados(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion) {
+		LinkedList *pArrayListSeleccion, LinkedList *pArrayListConvocados) {
 	int mostrarSubmenu = 1;
 	int esOpcionValida;
 	int opcion;
 
-	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL) {
+	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL
+			&& pArrayListConvocados != NULL) {
 		while (mostrarSubmenu == 1) {
 			esOpcionValida =
 					utn_obtenerNumero(&opcion,
 							"Seleccione listado a ver:\n1. Jugadores\n2. Selecciones\n3. Jugadores convocados\n4. Salir\n",
 							"Error. Tiene que elegir una opción del 1 y al 4.\n",
 							1, 4);
-
 			if (esOpcionValida == 0) {
 				switch (opcion) {
 				case 1:
-					controller_listarJugadores(pArrayListJugador);
+					if (controller_listarJugadores(pArrayListJugador) == -1) {
+						printf("No se pudieron listar jugadores\n");
+					}
 					break;
 				case 2:
-					controller_listarSelecciones(pArrayListSeleccion);
+					if (controller_listarSelecciones(pArrayListSeleccion)
+							== -1) {
+						printf("No se pudieron listar selecciones\n");
+					}
 					break;
 				case 3:
-					controller_listarJugadoresConvocados(pArrayListJugador,
-							pArrayListSeleccion);
+					if (controller_listarJugadoresConvocados(
+							pArrayListConvocados) == -1) {
+						printf("No se pudieron listar jugadores convocados\n");
+					}
 					break;
 				case 4:
 					mostrarSubmenu = 0;
