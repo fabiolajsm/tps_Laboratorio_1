@@ -1,5 +1,3 @@
-#include "LinkedList.h"
-
 #ifndef selec_H_INCLUDED
 #define selec_H_INCLUDED
 
@@ -21,9 +19,6 @@ int selec_getConfederacion(Seleccion *this, char *confederacion);
 int selec_setConvocados(Seleccion *this, int convocados);
 int selec_getConvocados(Seleccion *this, int *convocados);
 
-// Listados
-void controller_listarSeleccion(Seleccion *item);
-int controller_listarSelecciones(LinkedList *pArrayListSeleccion);
 int selec_compararConfederaciones(void *a, void *b);
 
 #endif // selec_H_INCLUDED

@@ -268,6 +268,205 @@ static int controller_generarIDJugador(void) {
 	return retorno;
 }
 
+// --- Listados ---
+//Confederaciones: AFC, CAF, CONCACAF, CONMEBOL, UEFA.
+static int controller_ObtenerConfederacion(char *pConfederacion,
+		int idSeleccion) {
+	int retorno = -1;
+	if (pConfederacion != NULL) {
+		switch (idSeleccion) {
+		case 2:
+		case 4:
+		case 9:
+		case 21:
+		case 22:
+		case 27:
+			strcpy(pConfederacion, "AFC");
+			break;
+		case 7:
+		case 18:
+		case 23:
+		case 28:
+		case 31:
+			strcpy(pConfederacion, "CAF");
+			break;
+		case 8:
+		case 10:
+		case 15:
+		case 24:
+			strcpy(pConfederacion, "CONCACAF");
+			break;
+		case 3:
+		case 6:
+		case 13:
+		case 32:
+			strcpy(pConfederacion, "CONMEBOL");
+			break;
+		case 1:
+		case 5:
+		case 11:
+		case 12:
+		case 14:
+		case 16:
+		case 17:
+		case 19:
+		case 20:
+		case 25:
+		case 26:
+		case 29:
+		case 30:
+			strcpy(pConfederacion, "UEFA");
+			break;
+		default:
+			strcpy(pConfederacion, "No esta convocado");
+			break;
+		}
+		retorno = 0;
+	}
+	return retorno;
+}
+/** \brief Listar jugador
+ *
+ * \param item Jugador*
+ * \return void
+ *
+ */
+static void controller_listarJugador(Jugador *item) {
+	int id;
+	char nombreCompleto[100];
+	int edad;
+	char posicion[30];
+	char nacionalidad[30];
+	int idSeleccion;
+	char textoSeleccion[30];
+
+	if (item != NULL && jug_getId(item, &id) == 1
+			&& jug_getNombreCompleto(item, nombreCompleto) == 1
+			&& jug_getEdad(item, &edad) == 1
+			&& jug_getPosicion(item, posicion) == 1
+			&& jug_getNacionalidad(item, nacionalidad) == 1
+			&& jug_getIdSeleccion(item, &idSeleccion) == 1
+			&& controller_ObtenerConfederacion(textoSeleccion, idSeleccion)
+					== 0) {
+		printf("| %*d | %*s | %*d | %*s | %*s | %*s  |\n", -3, id, -28,
+				nombreCompleto, -5, edad, -24, posicion, -18, nacionalidad, -17,
+				textoSeleccion);
+	}
+}
+
+/** \brief Listar jugadores
+ *
+ * \param pArrayListJugador LinkedList*
+ * \return int
+ *
+ */
+int controller_listarJugadores(LinkedList *pArrayListJugador) {
+	int retorno = -1;
+	int largo = ll_len(pArrayListJugador);
+
+	if (pArrayListJugador != NULL && largo > 0) {
+		printf("\t\t\t\t\t- Listado de Jugadores -\n");
+		printf(
+				"==================================================================================================================\n");
+		printf("|%*s|%*s|%*s|%*s|%*s|%s|\n", -5, " ID", -30, " NOMBRE", -7,
+				" EDAD", -27, " POSICIÓN", -20, " NACIONALIDAD",
+				" SELECCIÓN          ");
+		printf(
+				"------------------------------------------------------------------------------------------------------------------\n");
+		for (int i = 0; i < largo; i++) {
+			controller_listarJugador((Jugador*) ll_get(pArrayListJugador, i));
+		}
+		printf(
+				"==================================================================================================================\n");
+		retorno = 0;
+	}
+
+	return retorno;
+}
+
+/** \brief Listar convocados
+ *
+ * \param pArrayListJugador LinkedList*
+ * \param pArrayListSeleccion LinkedList*
+ * \return int
+ *
+ */
+int controller_listarJugadoresConvocados(LinkedList *pArrayListConvocados) {
+	int retorno = -1;
+	int largo = ll_len(pArrayListConvocados);
+
+	if (pArrayListConvocados != NULL) {
+		if (ll_isEmpty(pArrayListConvocados) == 1) {
+			printf("No hay jugadores convocados\n");
+		} else {
+			printf("\t\t\t\t\t- Jugadores convocados -\n");
+			printf(
+					"==================================================================================================================\n");
+			printf("|%*s|%*s|%*s|%*s|%*s|%s|\n", -5, " ID", -30, " NOMBRE", -7,
+					" EDAD", -27, " POSICIÓN", -20, " NACIONALIDAD",
+					" SELECCIÓN          ");
+			printf(
+					"------------------------------------------------------------------------------------------------------------------\n");
+			for (int i = 0; i < largo; i++) {
+				controller_listarJugador(
+						(Jugador*) ll_get(pArrayListConvocados, i));
+			}
+			printf(
+					"==================================================================================================================\n");
+		}
+		retorno = 0;
+	}
+
+	return retorno;
+}
+/** \brief Listar seleccion
+ *
+ * \param item Seleccion*
+ * \return void
+ *
+ */
+static void controller_listarSeleccion(Seleccion *item) {
+	int id;
+	char pais[30];
+	char confederacion[30];
+	int convocados;
+
+	if (item != NULL && selec_getId(item, &id) == 1
+			&& selec_getPais(item, pais) == 1
+			&& selec_getConfederacion(item, confederacion) == 1
+			&& selec_getConvocados(item, &convocados) == 1) {
+		printf("| %*d | %*s | %*s |       %*d |\n", -3, id, -17, pais, -13,
+				confederacion, -6, convocados);
+	}
+}
+
+/** \brief Listar selecciones
+ *
+ * \param pArrayListSeleccion LinkedList*
+ * \return int
+ *
+ */
+int controller_listarSelecciones(LinkedList *pArrayListSeleccion) {
+	int retorno = -1;
+	int largo = ll_len(pArrayListSeleccion);
+
+	if (pArrayListSeleccion != NULL && largo > 0) {
+		printf("\t\t- Listado de Selecciones -\n");
+		printf("==========================================================\n");
+		printf("|%*s|%*s|%*s|%*s|\n", -5, " ID", -20, " PAÍS", -7,
+				" CONFEDERACIÓN ", -14, " CONVOCADOS");
+		printf("---------------------------------------------------------\n");
+		for (int i = 0; i < largo; i++) {
+			controller_listarSeleccion(
+					(Seleccion*) ll_get(pArrayListSeleccion, i));
+		}
+		printf("==========================================================\n");
+		retorno = 0;
+	}
+
+	return retorno;
+}
+
 // --- Jugadores y selecciones ---
 static int asignarPosicion(char *pPosicion, int opcion) {
 	int retorno = -1;

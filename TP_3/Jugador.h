@@ -1,5 +1,3 @@
-#include "LinkedList.h"
-
 #ifndef jug_H_INCLUDED
 #define jug_H_INCLUDED
 
@@ -37,11 +35,6 @@ int jug_setIdSeleccion(Jugador *this, int idSeleccion);
 int jug_getIdSeleccion(Jugador *this, int *idSeleccion);
 
 int jug_compararNacionalidad(void *a, void *b);
-
-// Listados
-void controller_listarJugador(Jugador *item);
-int controller_listarJugadores(LinkedList *pArrayListJugador);
-int controller_listarJugadoresConvocados(LinkedList *pArrayListConvocados);
 
 // Comparaciones
 int jug_compararNacionalidad(void *a, void *b);

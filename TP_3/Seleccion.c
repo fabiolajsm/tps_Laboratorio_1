@@ -83,55 +83,6 @@ int selec_getConvocados(Seleccion *this, int *convocados) {
 	return retorno;
 }
 
-// -- Listados --
-
-/** \brief Listar seleccion
- *
- * \param item Seleccion*
- * \return void
- *
- */
-void controller_listarSeleccion(Seleccion *item) {
-	int id;
-	char pais[30];
-	char confederacion[30];
-	int convocados;
-
-	if (item != NULL && selec_getId(item, &id) == 1
-			&& selec_getPais(item, pais) == 1
-			&& selec_getConfederacion(item, confederacion) == 1
-			&& selec_getConvocados(item, &convocados) == 1) {
-		printf("| %*d | %*s | %*s |       %*d |\n", -3, id, -17, pais, -13,
-				confederacion, -6, convocados);
-	}
-}
-
-/** \brief Listar selecciones
- *
- * \param pArrayListSeleccion LinkedList*
- * \return int
- *
- */
-int controller_listarSelecciones(LinkedList *pArrayListSeleccion) {
-	int retorno = -1;
-	int largo = ll_len(pArrayListSeleccion);
-
-	if (pArrayListSeleccion != NULL && largo > 0) {
-		printf("\t\t- Listado de Selecciones -\n");
-		printf("==========================================================\n");
-		printf("|%*s|%*s|%*s|%*s|\n", -5, " ID", -20, " PAÍS", -7,
-				" CONFEDERACIÓN ", -14, " CONVOCADOS");
-		printf("---------------------------------------------------------\n");
-		for (int i = 0; i < largo; i++) {
-			controller_listarSeleccion(
-					(Seleccion*) ll_get(pArrayListSeleccion, i));
-		}
-		printf("==========================================================\n");
-		retorno = 0;
-	}
-
-	return retorno;
-}
 /** \brief Compara las confederaciones en la lista de selecciones para poder ordenarlas
  *
  * \param a void*

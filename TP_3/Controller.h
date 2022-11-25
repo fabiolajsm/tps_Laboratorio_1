@@ -31,6 +31,11 @@ int controller_editarSeleccion(LinkedList *pArrayListSeleccion);
 // Ordenados y listados
 void controller_listados(LinkedList *pArrayListJugador,
 		LinkedList *pArrayListSeleccion, LinkedList *pArrayListConvocados);
+
+int controller_listarJugadores(LinkedList *pArrayListJugador);
+int controller_listarJugadoresConvocados(LinkedList *pArrayListConvocados);
+int controller_listarSelecciones(LinkedList *pArrayListSeleccion);
+
 int controller_ordenarJugadores(LinkedList *pArrayListJugador);
 int controller_ordenarSelecciones(LinkedList *pArrayListSeleccion);
 int controller_ordenarYListar(LinkedList *pArrayListJugador,
