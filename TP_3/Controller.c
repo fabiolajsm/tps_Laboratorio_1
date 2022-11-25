@@ -156,7 +156,24 @@ int controller_guardarJugadoresModoTexto(char *path,
  */
 int controller_guardarJugadoresModoBinario(char *path,
 		LinkedList *pArrayListJugador) {
-	return 1;
+	int retorno = -1;
+	FILE *pArchivo;
+	Jugador *pAuxJugador;
+	int largo = ll_len(pArrayListJugador);
+
+	if (path != NULL && pArrayListJugador != NULL) {
+		pArchivo = fopen(path, "wb");
+		if (pArchivo != NULL) {
+			for (int i = 0; i < largo; i++) {
+				pAuxJugador = ll_get(pArrayListJugador, i);
+				if (pAuxJugador != NULL) {
+					fwrite(pAuxJugador, sizeof(Jugador), 1, pArchivo);
+				}
+			}
+			retorno = 0;
+		}
+	}
+	return retorno;
 }
 /** \brief Carga los datos de los selecciones desde el archivo selecciones.csv (modo texto).
  *

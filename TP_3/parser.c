@@ -57,7 +57,7 @@ int parserJugadorDesdeTexto(FILE *pArchivo, LinkedList *pArrayListJugador) {
  */
 int parser_JugadorFromBinary(FILE *pArchivo, LinkedList *pArrayListJugador) {
 	int retorno = -1;
-	Jugador *pAuxJugador = jug_new();
+	Jugador *pAuxJugador;
 	int cantidadElementos;
 	int id;
 	char nombreCompleto[100];
@@ -68,24 +68,26 @@ int parser_JugadorFromBinary(FILE *pArchivo, LinkedList *pArrayListJugador) {
 
 	if (pArrayListJugador != NULL && pArchivo != NULL) {
 		while (!feof(pArchivo)) {
+			pAuxJugador = jug_new();
 			cantidadElementos = fread(pAuxJugador, sizeof(Jugador), 1,
 					pArchivo);
-			if (cantidadElementos == 1 && jug_getId(pAuxJugador, &id) == 1
-					&& jug_getNombreCompleto(pAuxJugador, nombreCompleto) == 1
-					&& jug_getEdad(pAuxJugador, &edad) == 1
-					&& jug_getPosicion(pAuxJugador, posicion) == 1
-					&& jug_getNacionalidad(pAuxJugador, nacionalidad) == 1
-					&& jug_getIdSeleccion(pAuxJugador, &idSeleccion) == 1) {
-				if (ll_add(pArrayListJugador, pAuxJugador) == 0) {
-					retorno = 0;
+			if (pAuxJugador != NULL) {
+				if (cantidadElementos == 1 && jug_getId(pAuxJugador, &id) == 1
+						&& jug_getNombreCompleto(pAuxJugador, nombreCompleto)
+								== 1 && jug_getEdad(pAuxJugador, &edad) == 1
+						&& jug_getPosicion(pAuxJugador, posicion) == 1
+						&& jug_getNacionalidad(pAuxJugador, nacionalidad) == 1
+						&& jug_getIdSeleccion(pAuxJugador, &idSeleccion) == 1) {
+					if (ll_add(pArrayListJugador, pAuxJugador) == 0) {
+						retorno = 0;
+					} else {
+						free(pAuxJugador);
+						break;
+					}
 				}
-			} else {
-				free(pAuxJugador);
-				break;
 			}
 		}
 	}
-
 	return retorno;
 }
 
