@@ -1125,6 +1125,18 @@ void controller_listados(LinkedList *pArrayListJugador,
 	}
 }
 
+static int seleccionarOrden() {
+	int ordenElegido = 1;
+	if (utn_obtenerNumero(&ordenElegido,
+			"Mostrar de forma:\n1. Ascendente.\n2. Descendente.\n",
+			"Error. Opción inválida, tiene que ser 1 o 2.\n", 1, 2) == 0) {
+		if (ordenElegido == 2) {
+			ordenElegido = 0;
+		}
+	}
+	return ordenElegido;
+}
+
 /** \brief Ordenar jugadores
  *
  * \param pArrayListJugador LinkedList*
@@ -1135,29 +1147,38 @@ int controller_ordenarJugadores(LinkedList *pArrayListJugador) {
 	int retorno = -1;
 	int opcion;
 	int listaOrdenada;
+	int mostrarSubmenu = 1;
 
-	if (pArrayListJugador != NULL
-			&& utn_obtenerNumero(&opcion,
-					"Ordenar jugadores:\n1. Por nacionalidad.\n2. Por edad.\n3. Por nombre.\n",
-					"Error. Opción inválida, tiene que ser un número del 1 al 3.\n",
-					1, 3) == 0) {
-		// por preferencia ordené de forma ascendente
-		// si queremos descendente ponemos un 0 en vez del 1
-		switch (opcion) {
-		case 1:
-			listaOrdenada = ll_sort(pArrayListJugador, jug_compararNacionalidad,
-					1);
-			break;
-		case 2:
-			listaOrdenada = ll_sort(pArrayListJugador, jug_compararEdad, 1);
-			break;
-		case 3:
-			listaOrdenada = ll_sort(pArrayListJugador, jug_compararNombres, 1);
-			break;
-		}
-		if (listaOrdenada == 0
-				&& controller_listarJugadores(pArrayListJugador) == 0) {
-			retorno = 0;
+	if (pArrayListJugador != NULL) {
+		while (mostrarSubmenu) {
+			if (utn_obtenerNumero(&opcion,
+					"Ordenar jugadores:\n1. Por nacionalidad.\n2. Por edad.\n3. Por nombre.\n4. Salir.\n",
+					"Error. Opción inválida, tiene que ser un número del 1 al 4.\n",
+					1, 4) == 0) {
+				// si queremos mostar en orden descendente ponemos un 0 y si queremos mostrar en forma ascendente ponemos 1
+				switch (opcion) {
+				case 1:
+					listaOrdenada = ll_sort(pArrayListJugador,
+							jug_compararNacionalidad, seleccionarOrden());
+					break;
+				case 2:
+					listaOrdenada = ll_sort(pArrayListJugador, jug_compararEdad,
+							seleccionarOrden());
+					break;
+				case 3:
+					listaOrdenada = ll_sort(pArrayListJugador,
+							jug_compararNombres, seleccionarOrden());
+					break;
+				case 4:
+					printf("Submenú ordenar jugadores cerrado\n");
+					mostrarSubmenu = 0;
+					break;
+				}
+				if (listaOrdenada == 0
+						&& controller_listarJugadores(pArrayListJugador) == 0) {
+					retorno = 0;
+				}
+			}
 		}
 	}
 
@@ -1174,8 +1195,8 @@ int controller_ordenarSelecciones(LinkedList *pArrayListSeleccion) {
 	int retorno = -1;
 
 	if (pArrayListSeleccion != NULL) {
-		if (ll_sort(pArrayListSeleccion, selec_compararConfederaciones, 1)
-				== 0) {
+		if (ll_sort(pArrayListSeleccion, selec_compararConfederaciones,
+				seleccionarOrden()) == 0) {
 			if (controller_listarSelecciones(pArrayListSeleccion) == 0) {
 				retorno = 0;
 			}
@@ -1195,25 +1216,34 @@ int controller_ordenarYListar(LinkedList *pArrayListJugador,
 		LinkedList *pArrayListSeleccion) {
 	int retorno = -1;
 	int opcion;
+	int mostrarSubmenu = 1;
 
-	if (pArrayListJugador != NULL
-			&& utn_obtenerNumero(&opcion,
-					"Ordenar y listar:\n1. Jugadores.\n2. Selecciones por confederación.\n",
+	if (pArrayListJugador != NULL) {
+		while (mostrarSubmenu) {
+			if (utn_obtenerNumero(&opcion,
+					"Ordenar y listar:\n1. Jugadores.\n2. Selecciones por confederación.\n3. Salir.\n",
 					"Error. Opción inválida, tiene que ser un número del 1 al 2.\n",
 					1, 3) == 0) {
-		switch (opcion) {
-		case 1:
-			if (controller_ordenarJugadores(pArrayListJugador) == -1) {
-				printf("Error.\n");
+				switch (opcion) {
+				case 1:
+					if (controller_ordenarJugadores(pArrayListJugador) == -1) {
+						printf("Error.\n");
+					}
+					break;
+				case 2:
+					if (controller_ordenarSelecciones(pArrayListSeleccion)
+							== -1) {
+						printf("Error.\n");
+					}
+					break;
+				case 3:
+					printf("Submenú ordenar y listar cerrado\n");
+					mostrarSubmenu = 0;
+					break;
+				}
 			}
-			break;
-		case 2:
-			if (controller_ordenarSelecciones(pArrayListSeleccion) == -1) {
-				printf("Error.\n");
-			}
-			break;
+			retorno = 0;
 		}
-		retorno = 0;
 	}
 
 	return retorno;

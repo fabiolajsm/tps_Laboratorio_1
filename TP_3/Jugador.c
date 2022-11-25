@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "LinkedList.h"
 #include "Jugador.h"
 #include "Seleccion.h"
@@ -144,6 +145,14 @@ int jug_getIdSeleccion(Jugador *this, int *idSeleccion) {
 }
 
 // Comparaciones
+static void convertirStringAMinuscula(char *pCadena) {
+	if (pCadena != NULL) {
+		for (int indice = 0; pCadena[indice] != '\0'; ++indice) {
+			pCadena[indice] = tolower(pCadena[indice]);
+		}
+	}
+}
+
 /** \brief Compara las nacionalidades en la lista jugadores para poder ordenarlas
  *
  * \param a void*
@@ -153,6 +162,7 @@ int jug_getIdSeleccion(Jugador *this, int *idSeleccion) {
  */
 int jug_compararNacionalidad(void *a, void *b) {
 	int retorno = -1;
+	int largoCadena = 30;
 	char nacionalidadA[30];
 	char nacionalidadB[30];
 	Jugador *pAuxiliarA = (Jugador*) a;
@@ -161,7 +171,9 @@ int jug_compararNacionalidad(void *a, void *b) {
 	if (a != NULL && b != NULL) {
 		if (jug_getNacionalidad(pAuxiliarA, nacionalidadA)
 				&& jug_getNacionalidad(pAuxiliarB, nacionalidadB)) {
-			if (strncmp(nacionalidadA, nacionalidadB, 30) > 0) {
+			convertirStringAMinuscula(nacionalidadA);
+			convertirStringAMinuscula(nacionalidadB);
+			if (strncmp(nacionalidadA, nacionalidadB, largoCadena) > 0) {
 				retorno = 1;
 			} else {
 				retorno = 0;
@@ -204,16 +216,17 @@ int jug_compararEdad(void *a, void *b) {
  *
  */
 int jug_compararNombres(void *a, void *b) {
-	int retorno = -1;
+	int retorno = 0;
 	char nombreA[30];
 	char nombreB[30];
 	Jugador *pAuxiliarA = (Jugador*) a;
 	Jugador *pAuxiliarB = (Jugador*) b;
 
 	if (a != NULL && b != NULL) {
-
-		if (jug_getNacionalidad(pAuxiliarA, nombreA)
-				&& jug_getNacionalidad(pAuxiliarB, nombreB)) {
+		if (jug_getNombreCompleto(pAuxiliarA, nombreA)
+				&& jug_getNombreCompleto(pAuxiliarB, nombreB)) {
+			convertirStringAMinuscula(nombreA);
+			convertirStringAMinuscula(nombreB);
 			if (strncmp(nombreA, nombreB, 30) > 0) {
 				retorno = 1;
 			} else {
