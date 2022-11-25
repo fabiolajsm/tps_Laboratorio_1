@@ -13,9 +13,7 @@ int main() {
 	int opcion;
 	int confirmacion;
 	int hayCambios = 0;
-	static int cargaronJugadores = 0;
-	static int cargaronSelecciones = 0;
-	static int cargaronConvocados = 0;
+	int cargaronConvocados = 0;
 	LinkedList *listaJugadores = ll_newLinkedList();
 	LinkedList *listaSelecciones = ll_newLinkedList();
 	LinkedList *listaJugadoresConvocados = ll_newLinkedList();
@@ -28,15 +26,14 @@ int main() {
 		if (esOpcionValida == 0) {
 			switch (opcion) {
 			case 1:
-				if (cargaronJugadores == 1 && cargaronSelecciones == 1) {
+				if (ll_isEmpty(listaJugadores) == 0
+						&& ll_isEmpty(listaSelecciones) == 0) {
 					printf("Ya se cargaron los archivos.\n");
 				} else {
 					if (controller_cargarJugadoresDesdeTexto("jugadores.csv",
 							listaJugadores) == 0
 							&& controller_cargarSeleccionesDesdeTexto(
 									"selecciones.csv", listaSelecciones) == 0) {
-						cargaronJugadores = 1;
-						cargaronSelecciones = 1;
 						printf("Se han cargado exitosamente los archivos.\n");
 					} else {
 						printf("Error. No se pudieron cargar los archivos.\n");
@@ -44,7 +41,8 @@ int main() {
 				}
 				break;
 			case 2:
-				if (cargaronJugadores == 1 && cargaronSelecciones == 1) {
+				if (ll_isEmpty(listaJugadores) == 0
+						&& ll_isEmpty(listaSelecciones) == 0) {
 					if (controller_agregarJugador(listaJugadores) == -1) {
 						printf("Error, no se pudo dar de alta a el jugador.\n");
 					} else {
@@ -57,7 +55,8 @@ int main() {
 				}
 				break;
 			case 3:
-				if (cargaronJugadores == 1 && cargaronSelecciones == 1) {
+				if (ll_isEmpty(listaJugadores) == 0
+						&& ll_isEmpty(listaSelecciones) == 0) {
 					if (controller_editarJugador(listaJugadores) == 0) {
 						hayCambios = 1;
 					} else {
@@ -69,12 +68,14 @@ int main() {
 				}
 				break;
 			case 4:
-				if (cargaronJugadores == 1 && cargaronSelecciones == 1) {
+				if (ll_isEmpty(listaJugadores) == 0
+						&& ll_isEmpty(listaSelecciones) == 0) {
 					if (controller_removerJugador(listaJugadores,
 							listaSelecciones) == 0) {
 						hayCambios = 1;
+						printf("Se dio de baja exitosamente\n");
 					} else {
-						printf("Error. Intente mas tarde\n");
+						printf("Error. No se dio de baja a ningún jugador\n");
 					}
 				} else {
 					printf(
@@ -82,14 +83,16 @@ int main() {
 				}
 				break;
 			case 5:
-				if (cargaronJugadores == 1 && cargaronSelecciones == 1) {
+				if (ll_isEmpty(listaJugadores) == 0
+						&& ll_isEmpty(listaSelecciones) == 0) {
 					controller_listados(listaJugadores, listaSelecciones);
 				} else {
 					printf(ERROR_NO_HAY_CARGA);
 				}
 				break;
 			case 6:
-				if (cargaronJugadores == 1 && cargaronSelecciones == 1) {
+				if (ll_isEmpty(listaJugadores) == 0
+						&& ll_isEmpty(listaSelecciones) == 0) {
 					if (controller_convocarJugadores(listaJugadores,
 							listaSelecciones) == 0) {
 						hayCambios = 1;
@@ -99,7 +102,8 @@ int main() {
 				}
 				break;
 			case 7:
-				if (cargaronJugadores == 1 && cargaronSelecciones == 1) {
+				if (ll_isEmpty(listaJugadores) == 0
+						&& ll_isEmpty(listaSelecciones) == 0) {
 					if (controller_ordenarYListar(listaJugadores,
 							listaSelecciones) == -1) {
 						printf("Error. Intente mas tarde\n");
@@ -109,7 +113,8 @@ int main() {
 				}
 				break;
 			case 8:
-				if (cargaronJugadores == 1 && cargaronSelecciones == 1) {
+				if (ll_isEmpty(listaJugadores) == 0
+						&& ll_isEmpty(listaSelecciones) == 0) {
 					if (controller_generarJugadoresDesdeBinario(
 							"jugadoresConvocados.bin", listaJugadores) == 0) {
 						cargaronConvocados++;
@@ -123,7 +128,8 @@ int main() {
 				}
 				break;
 			case 9:
-				if (!cargaronJugadores && !cargaronSelecciones) {
+				if (ll_isEmpty(listaJugadores) == 1
+						&& ll_isEmpty(listaSelecciones) == 1) {
 					printf(ERROR_NO_HAY_CARGA);
 				} else if (!cargaronConvocados) {
 					printf(
@@ -143,7 +149,8 @@ int main() {
 				}
 				break;
 			case 10:
-				if (!cargaronJugadores && !cargaronSelecciones) {
+				if (ll_isEmpty(listaJugadores) == 1
+						&& ll_isEmpty(listaSelecciones) == 1) {
 					printf(ERROR_NO_HAY_CARGA);
 				}
 				if (hayCambios) {
@@ -165,11 +172,12 @@ int main() {
 							"Hay cambios sin guardar. Seguro desea salir?\n1. Si.\n2. No.\n",
 							"Error. Opción inválida, tiene que elegir un número del 1 al 2.\n",
 							1, 2) == 0 && confirmacion == 1) {
+						printf("Hasta luego;D\n");
 						mostrarMenu = 0;
 					}
 				} else {
-					mostrarMenu = 0;
 					printf("Hasta luego;D\n");
+					mostrarMenu = 0;
 				}
 				break;
 			}

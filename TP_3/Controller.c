@@ -600,6 +600,7 @@ int controller_removerJugador(LinkedList *pArrayListJugador,
 	int indexJugador;
 	int idJugador;
 	int idSeleccionJugador;
+	int confirmacion;
 	Jugador *pJugadorARemover = NULL;
 	Seleccion *pSeleccionJugador = NULL;
 
@@ -613,32 +614,36 @@ int controller_removerJugador(LinkedList *pArrayListJugador,
 					idJugadorIngresado);
 			pJugadorARemover = ll_get(pArrayListJugador, indexJugador);
 
-			if (pJugadorARemover != NULL
-					&& jug_getId(pJugadorARemover, &idJugador) == 1
-					&& idJugador == idJugadorIngresado
-					&& jug_getIdSeleccion(pJugadorARemover, &idSeleccionJugador)
-							== 1) {
-				if (idSeleccionJugador > 0) {
-					if (ll_remove(pArrayListJugador, indexJugador) == 0
-							&& controller_restarConvocado(pArrayListSeleccion,
-									idSeleccionJugador, pSeleccionJugador)
-									== 0) {
-						retorno = 0;
-					}
-				} else {
-					if (ll_remove(pArrayListJugador, indexJugador) == 0) {
-						retorno = 0;
+			if (pJugadorARemover != NULL) {
+				if (jug_getId(pJugadorARemover, &idJugador) == 1
+						&& idJugador == idJugadorIngresado
+						&& jug_getIdSeleccion(pJugadorARemover,
+								&idSeleccionJugador) == 1) {
+					if (idSeleccionJugador > 0) {
+						if (utn_obtenerNumero(&confirmacion,
+								"Este jugador está convocado en una selección. Seguro desea eliminarlo?\n1. Si.\n2. No.\n",
+								"Error. Opción inválida, tiene que elegir un número del 1 al 2.\n",
+								1, 2) == 0 && confirmacion == 1) {
+							if (ll_remove(pArrayListJugador, indexJugador) == 0
+									&& controller_restarConvocado(
+											pArrayListSeleccion,
+											idSeleccionJugador,
+											pSeleccionJugador) == 0) {
+								retorno = 0;
+							}
+						}
+					} else {
+						if (ll_remove(pArrayListJugador, indexJugador) == 0) {
+							retorno = 0;
+						}
 					}
 				}
+			} else {
+				printf("Error. ID de jugador no encontrado.\n");
 			}
-		} else {
-			printf("Error. ID de jugador no encontrado.\n");
 		}
 	}
 
-	if (retorno == 0) {
-		printf("Se dio de baja exitosamente\n");
-	}
 	return retorno;
 }
 
@@ -686,47 +691,52 @@ static int controller_convocarJugador(LinkedList *pArrayListJugador,
 	int indexSeleccion;
 	int convocados;
 
-	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL
-			&& controller_listarSelecciones(pArrayListSeleccion) == 0) {
+	if (pArrayListJugador != NULL && pArrayListSeleccion != NULL) {
 		if (utn_obtenerNumero(&idJugador,
 				"Ingrese el ID del jugador que quiere convocar:\n",
-				"Error. El ID tiene que ser un numero entero, mayor 0.\n", 1,
-				9000) == 0
-				&& utn_obtenerNumero(&idSeleccionIngresada,
-						"Ingrese el ID de la seleccion a donde quiere convocar:\n",
-						"Error. El ID tiene que ser un numero entero, mayor a 0 y menor a 32.\n",
-						0, 32) == 0) {
+				"Error. El ID tiene que ser un numero entero, mayor 0 y menor a 9000.\n",
+				1, 9000) == 0) {
 			indexJugador = controller_obtenerIndexPorId(pArrayListJugador,
 					idJugador);
 			pJugadorAConvocar = ll_get(pArrayListJugador, indexJugador);
-			if (pJugadorAConvocar != NULL
-					&& jug_getIdSeleccion(pJugadorAConvocar,
-							&idSeleccionJugador) == 1) {
-				indexSeleccion = controller_obtenerIndexSeleccionPorId(
-						pArrayListSeleccion, idSeleccionIngresada);
-				if (idSeleccionJugador != 0) {
-					printf(
-							"Error. El jugador ya fue convocado por una selección\n");
-				} else {
-					pSeleccionElegida = ll_get(pArrayListSeleccion,
-							indexSeleccion);
-					if (pSeleccionElegida != NULL
-							&& selec_getConvocados(pSeleccionElegida,
-									&convocados) == 1) {
-						convocados++;
-						if (convocados <= MAXIMO_CONVOCADOS) {
-							if (jug_setIdSeleccion(pJugadorAConvocar,
-									idSeleccionIngresada) == 1) {
-								if (selec_setConvocados(pSeleccionElegida,
-										convocados)) {
-									selec_getConvocados(pSeleccionElegida,
-											&convocados);
-									retorno = 0;
+			// Verifico que el jugador exista
+			if (pJugadorAConvocar != NULL) {
+				if (jug_getIdSeleccion(pJugadorAConvocar, &idSeleccionJugador)
+						== 1) {
+					if (idSeleccionJugador != 0) {
+						printf(
+								"Error. El jugador ya fue convocado por una selección\n");
+					} else {
+						if (utn_obtenerNumero(&idSeleccionIngresada,
+								"Ingrese el ID de la seleccion a donde quiere convocar:\n",
+								"Error. El ID tiene que ser un numero entero, mayor a 0 y menor a 33.\n",
+								1, 32) == 0) {
+							indexSeleccion =
+									controller_obtenerIndexSeleccionPorId(
+											pArrayListSeleccion,
+											idSeleccionIngresada);
+							pSeleccionElegida = ll_get(pArrayListSeleccion,
+									indexSeleccion);
+							// Verifico que la selección exista
+							if (pSeleccionElegida != NULL
+									&& selec_getConvocados(pSeleccionElegida,
+											&convocados) == 1) {
+								convocados++;
+								if (convocados <= MAXIMO_CONVOCADOS) {
+									if (jug_setIdSeleccion(pJugadorAConvocar,
+											idSeleccionIngresada)
+											&& selec_setConvocados(
+													pSeleccionElegida,
+													convocados)) {
+										retorno = 0;
+									}
+								} else {
+									printf(
+											"Error. No se puede convocar mas jugadores a esta selección, ya está completa y tiene 22 jugadores.\n");
 								}
+							} else {
+								printf("Error. Selección no encontrada\n");
 							}
-						} else {
-							printf(
-									"Error. La selección ya está completa, tiene 22 jugadores y no pueden convocarse más.\n");
 						}
 					}
 				}
