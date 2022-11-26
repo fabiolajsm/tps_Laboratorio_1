@@ -19,9 +19,10 @@ int controller_guardarSeleccionesModoTexto(char *path,
 
 // Jugadores y selecciones
 int controller_agregarJugador(LinkedList *pArrayListJugador);
-int controller_editarJugador(LinkedList *pArrayListJugador);
-int controller_removerJugador(LinkedList *pArrayListJugador,
-		LinkedList *pArrayListSeleccion);
+int controller_editarJugador(LinkedList *pListaJugadores,
+		LinkedList *pListaSelecciones);
+int controller_removerJugador(LinkedList *pListaJugadores,
+		LinkedList *pListaSelecciones);
 int controller_obtenerIndexSeleccionPorId(LinkedList *pArrayListSeleccion,
 		int idSeleccion);
 int controller_convocarJugadores(LinkedList *pArrayListJugador,
@@ -32,11 +33,14 @@ int controller_editarSeleccion(LinkedList *pArrayListSeleccion);
 void controller_listados(LinkedList *pArrayListJugador,
 		LinkedList *pArrayListSeleccion, LinkedList *pArrayListConvocados);
 
-int controller_listarJugadores(LinkedList *pArrayListJugador);
-int controller_listarJugadoresConvocados(LinkedList *pArrayListConvocados);
+int controller_listarJugadores(LinkedList *pListaJugadores,
+		LinkedList *pListaSelecciones);
+int controller_listarJugadoresConvocados(LinkedList *pListaJugadoresConvocados,
+		LinkedList *pListaSelecciones);
 int controller_listarSelecciones(LinkedList *pArrayListSeleccion);
 
-int controller_ordenarJugadores(LinkedList *pArrayListJugador);
+int controller_ordenarJugadores(LinkedList *pArrayListJugador,
+		LinkedList *pArrayListSeleccion);
 int controller_ordenarSelecciones(LinkedList *pArrayListSeleccion);
 int controller_ordenarYListar(LinkedList *pArrayListJugador,
 		LinkedList *pArrayListSeleccion);

@@ -57,7 +57,8 @@ int main() {
 			case 3:
 				if (ll_isEmpty(listaJugadores) == 0
 						&& ll_isEmpty(listaSelecciones) == 0) {
-					if (controller_editarJugador(listaJugadores) == 0) {
+					if (controller_editarJugador(listaJugadores,
+							listaSelecciones) == 0) {
 						hayCambios = 1;
 					} else {
 						printf("Error.\n");
@@ -141,8 +142,8 @@ int main() {
 							== -1) {
 						printf("Error no se pudo leer el archivo\n");
 					} else {
-						if (controller_listarJugadores(listaJugadoresConvocados)
-								== -1) {
+						if (controller_listarJugadores(listaJugadoresConvocados,
+								listaSelecciones) == -1) {
 							printf(
 									"Error, no se pudieron listar los jugadores convocados\n");
 						}
