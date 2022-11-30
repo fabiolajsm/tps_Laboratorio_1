@@ -117,13 +117,15 @@ int main() {
 			case 8:
 				if (ll_isEmpty(listaJugadores) == 0
 						&& ll_isEmpty(listaSelecciones) == 0) {
-					if (controller_generarJugadoresDesdeBinario(
-							"jugadoresConvocados.bin", listaJugadores) == 0) {
-						cargaronConvocados++;
-						printf("Archivo generado exitosamente\n");
+					if (ll_isEmpty(listaJugadoresConvocados) == 1) {
+						printf("No hay jugadores convocados\n");
 					} else {
-						printf(
-								"Esta confederación no tiene jugadores convocados\n");
+						if (controller_generarJugadoresDesdeBinario(
+								"jugadoresConvocados.bin", listaJugadores)
+								== 0) {
+							cargaronConvocados++;
+							printf("Archivo generado exitosamente\n");
+						}
 					}
 				} else {
 					printf(ERROR_NO_HAY_CARGA);

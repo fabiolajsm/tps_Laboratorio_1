@@ -3,19 +3,19 @@
 
 // Archivos
 int controller_cargarJugadoresDesdeTexto(char *path,
-		LinkedList *pArrayListJugador);
-int controller_generarJugadoresDesdeBinario(char *path,
-		LinkedList *pArrayListJugador);
+		LinkedList *pListaJugadores);
 int controller_cargarJugadoresDesdeBinario(char *path,
-		LinkedList *pArrayListJugador);
-int controller_guardarJugadoresModoTexto(char *path,
-		LinkedList *pArrayListJugador);
-int controller_guardarJugadoresModoBinario(char *path,
-		LinkedList *pArrayListJugador);
+		LinkedList *pListaJugadores);
 int controller_cargarSeleccionesDesdeTexto(char *path,
-		LinkedList *pArrayListSeleccion);
+		LinkedList *pListaSelecciones);
+int controller_generarJugadoresDesdeBinario(char *path,
+		LinkedList *pListaJugadores);
+int controller_guardarJugadoresModoTexto(char *path,
+		LinkedList *pListaJugadores);
+int controller_guardarJugadoresModoBinario(char *path,
+		LinkedList *pListaJugadores) ;
 int controller_guardarSeleccionesModoTexto(char *path,
-		LinkedList *pArrayListSeleccion);
+		LinkedList *pListaSelecciones);
 
 // Jugadores y selecciones
 int controller_agregarJugador(LinkedList *pArrayListJugador);
